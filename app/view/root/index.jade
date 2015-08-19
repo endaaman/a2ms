@@ -1,0 +1,11 @@
+.content(v-view="content")
+
+.footer
+    .footer-items
+        .footer-item-text
+            a(href="/") Top
+        .footer-item-text
+            a(href="/help") Help
+        .footer-item-text
+            a(href="/login" v-if="!active") Login
+            a(href="/logout" v-if="active") Logout

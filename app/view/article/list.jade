@@ -1,0 +1,8 @@
+h1 記事一覧
+p
+    a(href="/article/new") 新規作成
+
+div(v-if="resolved")
+    ul
+        li(v-repeat="article: articles")
+            a(href="/article/{{article.title_en}}") {{article.title_ja}}

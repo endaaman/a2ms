@@ -1,0 +1,9 @@
+.col-sm-8.col-sm-push-2.col-md-6.col-md-push-3
+    h1 login
+    form(v-on="submit: performLogin($event)")
+        .control-group
+            input.control(type="text" name="username" v-model="credentials.username" placeholder="ユーザー名")
+        .control-group
+            input.control(type="password" name="password" v-model="credentials.password" placeholder="パスワード")
+        .control-group
+            button.btn.btn-green.btn-block(type="submit") ログイン

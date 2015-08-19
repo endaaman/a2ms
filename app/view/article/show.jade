@@ -1,0 +1,15 @@
+p
+    a(href="/memo") いちらんにもどる
+    span(v-if="active")
+        | 、
+        a(href="/memo/{{$context.params.title}}/edit") へんしゅう
+
+p(v-show="!memo") よみこみちう
+
+article.memo-show(v-if="memo")
+    header
+        h1.memo-title {{memo.title}}
+        .memo-date created at: {{ memo.created_at | date 'YYYY MM/DD hh:mm:ss' }}
+        .memo-date updated at: {{ memo.updated_at | date 'YYYY MM/DD hh:mm:ss' }}
+    
+    .memo-content(v-html="compiledContent" v-el="memoContent")
