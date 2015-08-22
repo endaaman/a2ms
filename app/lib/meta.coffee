@@ -1,8 +1,6 @@
 config = require '../config'
 
 
-
-
 applyMetaTag = (key, name, content)->
     el = document.querySelector "meta[#{key}=\"#{name}\"]"
 
@@ -55,12 +53,16 @@ setKeywords = (keywords)->
     applyMetaTag 'name', 'keywords', strKeywords
 
 
-module.exports = (meta)->
-    m = meta or {}
-    setType m.type or 'website'
-    setSiteName m.site_name or config.siteName
-    setTitle m.title
-    setUrl m.url or config.baseUrl + location.pathname
-    setImage m.image or config.baseUrl + config.defaultImage
-    setDescription m.description
-    setKeywords m.keywords
+module.exports = (Vue)->
+    meta = (meta)->
+        m = meta or {}
+        setType m.type or 'website'
+        setSiteName m.site_name or config.siteName
+        setTitle m.title
+        setUrl m.url or config.baseUrl + location.pathname
+        setImage m.image or config.baseUrl + config.defaultImage
+        setDescription m.description
+        setKeywords m.keywords
+
+    Vue.meta = meta
+    Vue.prototype.$meta = meta

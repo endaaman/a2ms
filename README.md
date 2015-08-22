@@ -1,3 +1,9 @@
-# a2ms.edu.hokudai.ac.jp
+# http://a2ms.med.hokudai.ac.jp
 
-Browser side source code.
+## TODO
+* compress font
+* article page
+    * list
+    * show
+    * edit
+* file upload

@@ -15,6 +15,7 @@ require 'vue-validator'
 require 'vue-resource'
 require 'marked'
 require 'moment'
+require 'zeroclipboard'
 require 'spaseo.js'
 
 marked = require 'marked'

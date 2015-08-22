@@ -182,7 +182,10 @@ module.exports = (Vue, options)->
         unbind: ->
             delete targetViews[@expression]
 
-    Vue.prototype.$context = -> currentContext
+    Object.defineProperty Vue.prototype, '$context',
+        get: -> currentContext
+
+    Vue.prototype.$context =
     Vue.prototype['$'+routerName] = router
     Vue[routerName] = router
     Vue.prototype['$route'] = -> currentRoute

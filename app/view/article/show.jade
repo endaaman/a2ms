@@ -1,15 +1,11 @@
-p
-    a(href="/memo") いちらんにもどる
+p(v-if="article")
+    a(href="/article") 一覧へ戻る
     span(v-if="active")
         | 、
-        a(href="/memo/{{$context.params.title}}/edit") へんしゅう
+        a(href="/article/{{article.slug}}/edit") 編集
 
-p(v-show="!memo") よみこみちう
+p(v-show="!article") loading..
 
-article.memo-show(v-if="memo")
-    header
-        h1.memo-title {{memo.title}}
-        .memo-date created at: {{ memo.created_at | date 'YYYY MM/DD hh:mm:ss' }}
-        .memo-date updated at: {{ memo.updated_at | date 'YYYY MM/DD hh:mm:ss' }}
-    
-    .memo-content(v-html="compiledContent" v-el="memoContent")
+div(v-if="article")
+    h1 {{article.title_ja}}
+    div(v-html="compiledContent")

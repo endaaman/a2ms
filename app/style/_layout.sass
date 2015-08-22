@@ -1,22 +1,32 @@
-.main
-    +clearfix
-
 .wrap
     min-height: 100%
     position: relative
+
+
+.topfix
     padding-top: $header-height
     @media (max-width: $screen-break-point)
-        padding-top: $header-narrow-height
+        padding-top: $header-height
 
-    padding-bottom: $footer-height + 40px
-
-.content
+.container
+    +centered
     +clearfix
-    padding-top: 12px
-    @media (max-width: $screen-break-point)
-        padding-top: 8px
+    @media (min-width: $screen-xs-max)
+        width: $screen-xs-max
+    @media (min-width: $screen-sm-max)
+        width: $screen-sm-max
+    @media (min-width: $screen-md-max)
+        width: $screen-md-max
+
+.section
+    +clearfix
+    padding: 32px 0
+    h2, h3, h4
+        color: $color-green-strong
+
+    p
+        line-height: 2em
 
 
-.content-with-sidebar
-    @media (min-width: $screen-break-point)
-        margin-left: $sidebar-width
+.section-2
+    background-color: lighten($color-green, 50%)

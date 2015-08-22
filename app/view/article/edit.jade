@@ -1,24 +1,22 @@
-p
-    a(href="/memo") いちらん
 
 h2
     span(v-if="edit") へんしゅう
     span(v-if="!edit") あたらしい
     
 p ※俺用
-p(v-show="!memo") よみこみちう
+p(v-show="!article") よみこみちう
 
-form(v-on="submit: performUpdate($event)" v-if="memo")
+form(v-on="submit: performUpdate($event)" v-if="article")
 
     .control-group
-        input.control(v-model="memo.title" placeholder="たいとる")
+        input.control(v-model="article.title" placeholder="たいとる")
     .control-group
-        input.control(v-model="memo.digest" placeholder="ようやく")
+        input.control(v-model="article.digest" placeholder="ようやく")
     .control-group
-        input.control(type="checkbox" v-model="memo.draft" id="memoDraft")
-        label.control-label(for="memoDraft") したがき
+        input.control(type="checkbox" v-model="article.draft" id="articleDraft")
+        label.control-label(for="articleDraft") したがき
     .control-group
-        .editor.control(v-editable="memo.content" placeholder="ほんぶん")
+        .editor.control(v-editable="article.content" placeholder="ほんぶん")
     .control-group
         button.btn.btn-green.btn-block(type="submit") ほぞん
     .control-group(v-if="edit")

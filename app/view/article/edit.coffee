@@ -7,6 +7,14 @@ module.exports = Vue.extend
         edit: false
 
     created: ->
-        console.log @$context().params
-        # @$resolve
-        #     article: Article.get(@$context().params.title)
+        @$resolve
+            article: do =>
+                if @$context.params.title
+                    Article.get(@$context.params.title).then (res)->
+                        res.data
+                else
+                    slug: ''
+                    title_ja: ''
+                    title_en: ''
+                    content_ja: ''
+                    content_en: ''

@@ -5,3 +5,4 @@ module.exports = (Vue)->
     (require './title') Vue
     (require './scroll') Vue
     (require './loader') Vue
+    (require './meta') Vue

@@ -1,0 +1,72 @@
+.hero
+    position: relative
+    background-image: url('../assets/hero.jpg')
+    background-size:cover
+    background-position: center
+
+    padding-top: 80px
+    padding-bottom: 40px
+
+.hero-title
+    margin-bottom: 20px
+    padding: 0
+    width: 600px
+    margin-left: 100px
+
+    font-size: 96px
+    line-height: 120px
+    font-family: chogokuboso, 'Hiragino Kaku Gothic ProN', Meiryo
+    font-weight: 100
+    color: $color-white
+
+    user-select: none
+    -webkit-user-select: none
+    cursor: default
+
+    .accented-char
+        background-color: $color-green-strong
+        color: $bg-color
+
+.share-twitter, .share-facebook
+    +centered
+    margin-left: 16px
+    height: 42px
+    line-height: 42px
+    width: 120px
+    border-style: solid
+    border-width: 1px
+    border-radius: 4px
+    font-size: 20px
+    text-align: center
+.share-twitter
+    border-color: $color-twitter
+    color: $color-twitter
+    &:hover
+        background-color: $color-twitter
+        color: $color-white
+.share-facebook
+    border-color: $color-facebook-light
+    color: $color-facebook-light
+    &:hover
+        background-color: $color-facebook-light
+        color: $color-white
+
+
+//     +clearfix
+//     width: 100%
+//     $rw: 55%
+//
+//     height: 100%
+//
+//
+//
+//     .hero-left, .hero-right
+//         float: left
+//
+//     .hero-left
+//         width: 100% - $rw
+//     .hero-right
+//         width: $rw
+//
+//     .hero-left
+//         text-align: right

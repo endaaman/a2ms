@@ -1,5 +1,5 @@
 makeArray = (arr)->
-    Array.isArray(arr) ? arr : [arr]
+    if Array.isArray(arr) then arr else [arr]
 
 getHref = (fonts)->
     family = Object.keys(fonts).map (name)->
