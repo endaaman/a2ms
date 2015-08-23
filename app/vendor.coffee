@@ -7,7 +7,6 @@ window._Promise = window.Promise
 window.Promise = require 'bluebird'
 
 require 'page'
-require 'superagent'
 require 'eventemitter2'
 
 require 'vue'
