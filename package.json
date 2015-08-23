@@ -4,7 +4,6 @@
     "start": "webpack-dev-server",
     "dev": "webpack",
     "prod": "webpack -p",
-    "seo": "pm2 start seo.js --name enda-seo",
     "clean": "rm -r build"
   },
   "dependencies": {
