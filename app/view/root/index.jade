@@ -1,28 +1,25 @@
-//- .header
-//-     .header-menus
-//-         .header-menu
-//-             a(href="/") TOP
-//-         .header-menu
-//-             a(href="/") ARTICLE
 .wrap
-    .hero(v-show="showHero")
-        h1.hero-title
-            | 医学部入試の
-            br
-            span.accented-char 妥
-            | 当性を
-            br
-            | 考える
-        
-        .row
-            .col-xs-6.col-sm-3.col-sm-offset-6
-                .share-twitter
-                    i.fa.fa-fw.fa-twitter
-                    | Tweet
-            .col-xs-6.col-sm-3
-                .share-facebook
-                    i.fa.fa-fw.fa-facebook
-                    | Share
+    .hero(v-el="hero" v-class="'hero-narrow': heroNarrow, 'hidden': !heroShown")
+        .container
+            h2.hero-title
+                | 医学部入試の
+                br
+                span.accented-char 妥
+                | 当性を
+                br
+                | 考える
+
+    .menu(v-class="'menu-fixed': menuFixed" v-if="menuShown")
+        .container
+            .menu-item(
+                v-repeat="item: items"
+                v-class="'menu-item-active': $index == activeItemIndex"
+                v-show="!item.userOnly || active")
+                a(href="{{item.href}}")
+                    i.fa.fa-fw(class="fa-{{item.icon}}")
+                    | {{item.text}}
+
+    .menu-shadow(v-show="menuFixed")
 
     .content(v-view="content")
 
@@ -30,6 +27,8 @@
         .footer-items
             .footer-item-text
                 a(href="/") Top
+            .footer-item-text
+                a(href="/manage" v-if="active") Manage
             .footer-item-text
                 a(href="/login" v-if="!active") Login
                 a(href="/logout" v-if="active") Logout

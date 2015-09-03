@@ -1,0 +1,33 @@
+h2.nomt ユーザーの管理
+
+p
+    | 認証を行うとログインすることが可能になります。ユーザの権限の失効には「認証を取り消す」をご利用ください。
+    | 削除は基本的に行わないでください。
+
+table.table(v-if="resolved")
+    thead
+        tr
+            th ユーザー名
+            th 認証状態
+            th 操作
+    tbody
+        tr(v-repeat="user: users")
+            td {{user.username}}
+            td
+                span(v-if="user.approved") 認証済み
+                span(v-if="!user.approved") 未認証
+            td
+                span.text-muted(v-if="user._id === you._id") 自分自身の削除・認証解除はできません
+                ul.list-inline.nomb(v-if="user._id !== you._id")
+                    li
+                        button.btn.btn-small(
+                            v-on="click: setApproval($event, user._id, !user.approved)"
+                            v-class="'btn-red': user.approved, btn-blue: !user.approved")
+                                span(v-if="!user.approved") 認証する
+                                span(v-if="user.approved") 認証を取り消す
+                    li
+                        button.btn.btn-small.btn-red(v-on="click: confirmDelete(user)") 削除
+
+modal(shown="{{@ shownDeleteModal}}" title="ユーザーの削除の確認")
+    button.btn.btn-red(v-on="click: performDelete(deletingUser)")
+        | {{deletingUser.username}}を削除する

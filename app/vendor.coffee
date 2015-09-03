@@ -17,15 +17,18 @@ require 'moment'
 require 'zeroclipboard'
 require 'spaseo.js'
 
-marked = require 'marked'
+(require 'zeroclipboard').config
+    swfPath: require 'file!zeroclipboard/dist/ZeroClipboard.swf'
 
+marked = require 'marked'
 renderer = new marked.Renderer()
 renderer.link = (href, title, text)->
     external = not /^\//.test href
-    usePrefix = external and not /^http/.test text
+    usePrefix = external and (not /^http/.test text) and (not /.+\..+/.test text)
     target = if external then ' target="_blank"' else ''
     prefix = if usePrefix then '<i class=\"fa fa-external-link\"></i>' else ''
     title = if title then " title=\"#{title}\"" else ''
     href= " href=\"#{href}\""
-
     "<a#{href}#{target}#{title}>#{prefix}#{text}</a>"
+marked.setOptions
+    renderer: renderer

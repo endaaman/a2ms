@@ -30,7 +30,7 @@ module.exports = new function() {
       { test: /\.jade$/,   loader: 'jade?self' },
       { test: /\.(png|jpe?g|gif)$/, loader: 'file'},
       { test: /\.sass$/,
-        loader: ExtractTextPlugin.extract('css?sourceMap!sass?indentedSyntax&sourceMap!autoprefixer')
+        loader: ExtractTextPlugin.extract('css!sass?indentedSyntax&sourceMap!autoprefixer')
       },
       { test: /\.css$/,
         loader: ExtractTextPlugin.extract('css?sourceMap')
@@ -89,6 +89,8 @@ module.exports = new function() {
     stats: { colors: true },
     proxy: {
       '/api/*': 'http://localhost:3000',
+      '/files/*': 'http://a2ms.local',
+      '/small_light*': 'http://a2ms.local'
     }
   };
 }

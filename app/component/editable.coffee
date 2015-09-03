@@ -10,7 +10,7 @@ module.exports = (Vue, options)->
                     @el.setAttribute 'placeholder', @defaultPlaceholder
         bind: ->
             @el.setAttribute 'contenteditable', true
-            @defaultPlaceholder = @el.getAttribute 'placeholder'
+            @defaultPlaceholder = (@el.getAttribute 'placeholder') or ''
 
             @handler = (->
                 @set @el.innerText

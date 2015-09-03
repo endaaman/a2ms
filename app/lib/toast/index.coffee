@@ -31,7 +31,7 @@ module.exports = (Vue)->
 
     vm.$mount().$appendTo document.body
 
-    Vue.router.on '$pageUpdating', ->
+    Vue.router.on '$pageUpdated', ->
         vm.close()
 
     toast = (message, period)->

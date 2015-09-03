@@ -2,7 +2,8 @@
     +clearfix
 
     height: 36px
-    border-bottom: solid 1px $color-lightgray
+    border-bottom: solid 1px $border-color
+    margin-bottom: $line-height-computed / 2
 
 .tab
     float: left
@@ -13,7 +14,7 @@
 
     border-top-width: 2px
 
-    font-size: 16px
+    font-size: 14px
 
     height: 36px
     line-height: 36px
@@ -26,11 +27,11 @@
 
     &:hover
         background-color: $color-green-pale
-        border-bottom-color: $color-lightgray
+        border-bottom-color: $border-color
 
     &.tab-active
-        border-right-color: $color-lightgray
-        border-left-color: $color-lightgray
+        border-right-color: $border-color
+        border-left-color: $border-color
         border-top-color: $color-green
         border-bottom-color: $bg-color
 

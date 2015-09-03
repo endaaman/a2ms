@@ -2,7 +2,7 @@
 __context = null
 
 handler = (e)->
-    if __context?.path is this.pathname
+    if __context?.path is (@pathname + @search)
         e.preventDefault()
 
 module.exports = (Vue)->

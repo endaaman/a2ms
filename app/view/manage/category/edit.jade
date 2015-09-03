@@ -1,0 +1,56 @@
+h2.nomt
+    | カテゴリの
+    span(v-if="editing") 編集
+    span(v-if="!editing") 追加
+
+p
+    a(href="/manage/category") カテゴリ一覧へ戻る
+
+form.row(v-if="cat" v-on="submit: performSave($event)")
+    .control-group
+        .col-sm-3
+            label.control-label 日本語名
+        .col-sm-9
+            input.control(
+                v-model="cat.name_ja"
+                v-validate="required"
+                placeholder="日本語名を入力してください")
+
+    .control-group
+        .col-sm-3
+            label.control-label 英語名
+        .col-sm-9
+            input.control(
+                v-model="cat.name_en"
+                v-validate="required"
+                placeholder="英語名を入力してください")
+    .control-group
+        .col-sm-3
+            label.control-label 簡単な説明（日本語・省略可）
+        .col-sm-9
+            input.control(
+                v-model="cat.desc_ja"
+                placeholder="日本語でこのカテゴリに簡単な関する説明")
+
+    .control-group
+        .col-sm-3
+            label.control-label 簡単な説明（英語・省略可）
+        .col-sm-9
+            input.control(
+                v-model="cat.desc_en"
+                placeholder="英語でこのカテゴリに簡単な関する説明")
+
+    .control-group
+        .col-sm-9.col-sm-push-3
+            ul.list-inline
+                li
+                    button.btn.btn-green(
+                        type="submit"
+                        v-attr="disabled: invalid") 保存する
+                li
+                    button.btn.btn-red(
+                        type="button"
+                        v-if="editing"
+                        v-on="click: performDelete($event)") 削除
+                
+                

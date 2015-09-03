@@ -5,39 +5,108 @@ main = [
     data:
         meta:
             title: 'HOME'
-            description: 'Admission to Medical School'
+            keywords: ['大学', '医学部', '入試']
     views:
         content: require './view/home'
 ,
     url: '/login'
     data:
         hero: false
+        menu: false
     views:
         content: require './view/login'
 ,
     url: '/logout'
     data:
         hero: false
+        menu: false
     views:
         content: require './view/logout'
 ,
-    url: '/article'
+    url: '/signup'
+    data:
+        hero: false
+        menu: false
+    views:
+        content: require './view/signup'
+,
+    url: '/manage'
+    data:
+        hero: false
+        next: '/'
+        meta:
+            title: '管理'
+    views:
+        content: require './view/manage'
     subs: [
         url: '/'
         views:
-            content: require './view/article/list'
+            manage_main: require './view/manage/main'
     ,
-        url: '/:title'
+        url: '/user'
         views:
-            content: require './view/article/show'
+            manage_main: require './view/manage/user'
     ,
-        url: '/:title/edit'
+        url: '/file'
         views:
-            content: require './view/article/edit'
+            manage_main: require './view/manage/file'
     ,
-        url: '/new'
-        views:
-            content: require './view/article/edit'
+        url: '/article'
+        subs: [
+            url: '/'
+            views:
+                manage_main: require './view/manage/article'
+        ,
+            url: '/new'
+            views:
+                manage_main: require './view/manage/article/edit'
+        ,
+            url: '/:id'
+            views:
+                manage_main: require './view/manage/article/edit'
+        ]
+    ,
+        url: '/tag'
+        subs: [
+            url: '/'
+            views:
+                manage_main: require './view/manage/tag'
+        ,
+            url: '/new'
+            views:
+                manage_main: require './view/manage/tag/edit'
+        ,
+            url: '/:id'
+            views:
+                manage_main: require './view/manage/tag/edit'
+        ]
+    ,
+        url: '/category'
+        subs: [
+            url: '/'
+            views:
+                manage_main: require './view/manage/category'
+        ,
+            url: '/new'
+            views:
+                manage_main: require './view/manage/category/edit'
+        ,
+            url: '/:id'
+            views:
+                manage_main: require './view/manage/category/edit'
+        ]
+    ]
+
+,
+    url: '/article'
+    data:
+        hero: 'narrow'
+    views:
+        content: require './view/article'
+    subs: [
+        url: '/'
+    ,
+        url: '/:slug'
     ]
 ]
 

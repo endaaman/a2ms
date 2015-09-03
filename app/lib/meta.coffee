@@ -35,6 +35,8 @@ setUrl = (url)->
     applyMetaTag 'property', 'og:url', url
 
 setImage = (url)->
+    if not url
+        return
     applyMetaTag 'property', 'og:image', url
     applyMetaTag 'name', 'twitter:image', url
 
@@ -60,7 +62,7 @@ module.exports = (Vue)->
         setSiteName m.site_name or config.siteName
         setTitle m.title
         setUrl m.url or config.baseUrl + location.pathname
-        setImage m.image or config.baseUrl + config.defaultImage
+        setImage m.image
         setDescription m.description
         setKeywords m.keywords
 

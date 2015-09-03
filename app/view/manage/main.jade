@@ -1,0 +1,34 @@
+h2.nomt 管理TOP
+p
+    span(v-if="$responsive.xs") 上
+    span(v-if="!$responsive.xs") 左
+    | のメニューから開始してください
+
+h3 本ウェブサイトについて
+
+p
+    | 本サイトは北海道大学医学部医学科3年の遠田によって制作されました。不具合等ございましたら
+    a(href="mailto:buhibuhidog@eis.hokdai.ac.jp") buhibuhidog@eis.hokdai.ac.jp
+    | までご連絡ください。
+
+    
+h3 本ウェブサイトのソースコード
+p
+    | ブラウザ上で動作するものと、サーバーのデータ管理用のものと、２つのパッケージから構成されており、
+    a(href="https://github.com" target="_blank") Github
+    | 上で管理しています。
+table.table
+    tr
+        th ブラウザ
+        td
+            a(href="https://github.com/endaaman/a2ms" target="_blank") https://github.com/endaaman/a2ms
+    tr
+        th サーバー
+        td
+            a(href="https://github.com/endaaman/a2ms-api" target="_blank") https://github.com/endaaman/a2ms-api
+p
+    | どちらも一般には非公開になっていますが、
+    a(href="https://github.com" target="_blank") Github
+    | に登録した上で、上記メールアドレスまでご連絡いただければアカウントを
+    strong Collaborator
+    | に追加いたしますので、その上で参照してください。

@@ -30,10 +30,11 @@ body
 
 
 a
-    color: $text-color
+    color: $link-color
     text-decoration: none
     font-weight: 400
-    text-decoration: underline
+    &:hover
+        text-decoration: underline
 
 p
     line-height: $line-height-base
@@ -51,6 +52,8 @@ pre > code
     font-size: 14px
     display: block
     overflow-x: auto
+    border-left: solid 2px $color-green-deep
+    padding: 0.5em 1em
     -webkit-text-size-adjust: none
 
 

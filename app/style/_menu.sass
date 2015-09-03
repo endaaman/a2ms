@@ -1,0 +1,40 @@
+.menu
+    +clearfix
+    position: relative
+    width: 100%
+    height: $menu-height
+
+    box-shadow: 0 0 4px rgba(0,0,0,0.4)
+    background-color: $bg-color
+
+    &.menu-fixed
+        position: fixed
+        top: 0
+        z-index: $menu-z
+        margin-bottom: $menu-height
+
+.menu-shadow
+    padding-top: $menu-height
+
+.menu-item
+    float: left
+    width: 120px
+    a
+        display: block
+        width: 100%
+        height: $menu-height
+        line-height: $menu-height
+
+        text-align: center
+        text-decoration: none
+        font-size: 16px
+
+        color: $color-green-strong
+        border-bottom: solid 2px transparent
+        &:hover
+            border-bottom-color: $color-green-strong
+
+    &.menu-item-active
+        // background-color: darken($color-white, 3%)
+        a
+            border-bottom-color: $color-green-strong

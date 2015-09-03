@@ -1,31 +1,89 @@
+=hero-lg
+    padding-top: 80px
+    padding-bottom: 40px
+
+
+=hero-md
+    padding-top: 60px
+    padding-bottom: 30px
+
+=hero-sm
+    padding-top: 40px
+    padding-bottom: 20px
+
+=hero-xs
+    padding-top: 20px
+    padding-bottom: 10px
+
 .hero
     position: relative
     background-image: url('../assets/hero.jpg')
     background-size:cover
     background-position: center
 
-    padding-top: 80px
-    padding-bottom: 40px
+    z-index: $menu-z + 1
 
-.hero-title
-    margin-bottom: 20px
-    padding: 0
-    width: 600px
-    margin-left: 100px
+    +hero-lg
+    @media (max-width: $screen-xs-max)
+        +hero-xs
 
+    @media (min-width: $screen-xs-max) and (max-width: $screen-sm-max)
+        +hero-sm
+
+    @media (min-width: $screen-sm-max) and (max-width: $screen-md-max)
+        +hero-md
+
+
+=title-lg
     font-size: 96px
     line-height: 120px
+
+=title-md
+    font-size: 64px
+    line-height: 96px
+
+=title-sm
+    font-size: 48px
+    line-height: 64px
+
+=title-xs
+    font-size: 36px
+    line-height: 48px
+
+
+.hero-title
+    padding: 0
     font-family: chogokuboso, 'Hiragino Kaku Gothic ProN', Meiryo
     font-weight: 100
     color: $color-white
 
+    margin-left: 6px
+
     user-select: none
     -webkit-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
     cursor: default
 
     .accented-char
         background-color: $color-green-strong
         color: $bg-color
+
+    +title-lg
+    @media (max-width: $screen-xs-max)
+        +title-xs
+
+    @media (min-width: $screen-xs-max) and (max-width: $screen-sm-max)
+        +title-sm
+
+    @media (min-width: $screen-sm-max) and (max-width: $screen-md-max)
+        +title-md
+
+.hero-narrow
+    +hero-xs
+    .hero-title
+        +title-xs
+
 
 .share-twitter, .share-facebook
     +centered

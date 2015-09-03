@@ -6,3 +6,4 @@ module.exports = (Vue)->
     (require './scroll') Vue
     (require './loader') Vue
     (require './meta') Vue
+    (require './ga') Vue

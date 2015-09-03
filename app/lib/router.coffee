@@ -32,6 +32,8 @@ updatePage = (nextRoute, pastRoute, context)->
 
     emitEvent '$pageUpdating', context, nextRoute, pastRoute, status
     if status.next
+        if status.next is true
+            return false
         if redirectHistory[context.path]
             throw new Error 'Your route setting contains redirect loop'
         redirectHistory[context.path] = true
@@ -39,9 +41,10 @@ updatePage = (nextRoute, pastRoute, context)->
         return false
 
     redirectHistory = {}
+    pastContext = currentContext
     currentContext = context
 
-    if pastRoute is nextRoute and not __reload
+    if pastContext?.path is currentContext.path and not __reload
         return true
 
     attachedViews = {}
@@ -142,8 +145,12 @@ routerBase =
     go: (path, reload)->
         __reload = !!reload
         page path
+    reload: ->
+        @go currentContext.path, true
     start: (Vue)->
         if not __started
+            if 'scrollRestoration' in history
+                history.scrollRestoration = 'manual'
             page '*', (context, next)->
                 context.query = qs.parse context.querystring
                 next()
@@ -162,6 +169,8 @@ routerBase =
                 new Route p
         else
             new Route params
+
+    context: currentContext
 
     views: attachedModels
 
@@ -183,12 +192,11 @@ module.exports = (Vue, options)->
             delete targetViews[@expression]
 
     Object.defineProperty Vue.prototype, '$context',
-        get: -> currentContext
+        get: ->
+            currentContext
 
-    Vue.prototype.$context =
     Vue.prototype['$'+routerName] = router
     Vue[routerName] = router
-    Vue.prototype['$route'] = -> currentRoute
 
     if options.autoStart
         Vue.nextTick ->
