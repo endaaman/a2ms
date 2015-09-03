@@ -29,16 +29,14 @@ module.exports = Vue.extend
         ]
         activeItemIndex: -1
 
-        scroll: ->
+    template: do require './index.jade'
+
+    created: ->
+        @scroll = =>
             if not @heroShown
                 return
             top = document.documentElement.scrollTop or document.body.scrollTop
             @menuFixed = top > @$$.hero.offsetHeight
-
-    template: do require './index.jade'
-
-    created: ->
-        @scroll = @scroll.bind this
         window.addEventListener 'scroll', @scroll
 
         @$on '$pageUpdated', (ctx, next)=>
