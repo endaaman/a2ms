@@ -2,8 +2,8 @@
   "private": true,
   "scripts": {
     "start": "webpack-dev-server",
-    "dev": "webpack",
-    "prod": "webpack -p",
+    "dev": "rm -rf build && webpack",
+    "prod": "rm -rf build && webpack -p",
     "clean": "rm -r build"
   },
   "dependencies": {
