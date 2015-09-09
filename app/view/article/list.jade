@@ -1,0 +1,36 @@
+ol.crumbs
+    li.crumb
+        a(href="/article") 記事一覧
+        span.crumb-delimitter
+            i.fa.fa-angle-right
+    li.crumb(v-if="tag")
+        | タグ：
+        a(href="/article?tag={{tag._id}}") {{tag.name_ja}}
+    li.crumb(v-if="cat")
+        | カテゴリー：
+        a(href="/article?cat={{cat._id}}") {{cat.name_ja}}
+    li.crumb(v-if="!tag && !cat")
+        | すべて表示
+
+div(v-if="cat")
+    h2 {{cat.name_ja}}
+    p(v-if="cat.desc_ja") {{cat.desc_ja}}
+    hr
+div(v-if="tag")
+    h2 {{tag.name_ja}}
+    hr
+
+div(v-if="!empty")
+    .article-digest(v-repeat="article: articles" track-by="_id")
+        h2
+            a(href="/article/{{article.slug}}") {{article.title_ja}}
+        .article-digest-dates
+            | 更新日 {{article.updated_at | date 'YYYY年M月DD日'}}
+            | &nbsp;/&nbsp;
+            | 投稿日 {{article.created_at | date 'YYYY年M月DD日'}}
+
+.text-muted(v-if="empty")
+    .spacer
+    p
+        span(v-if="tag") {{tag.name_ja}}のタグが付いた記事が存在しません
+        span(v-if="cat") {{cat.name_ja}}のカテゴリーに属する記事が存在しません

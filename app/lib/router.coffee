@@ -18,8 +18,6 @@ EventEmitter2 = (require 'eventemitter2')
 events = new EventEmitter2()
 
 
-
-
 emitEvent = (ev, context, next, past, status)->
     events.emit ev, context, next, past, status
     for name, model of attachedModels

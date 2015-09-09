@@ -1,27 +1,17 @@
 div
 .row(v-if="resolved")
-    .col-xs-12.col-sm-8.pull-right
-        .article(v-repeat="article: articles")
-            h1 {{article.title_ja}}
-            table.table
-                tr
-                    th 更新日
-                    td {{article.updated_at | date 'YYYY年M月DD日'}}
-                tr
-                    th 投稿日
-                    td {{article.created_at | date 'YYYY年M月DD日'}}
-            
-            div(v-html="getHtml(article)")
-
-    .col-xs-12.col-sm-4.pull-right
-        .col-xs-6.col-sm-12
+    .col-xs-12.col-sm-12.col-md-8.pull-right
+        component(is="{{view}}")
+        
+    .col-xs-12.col-sm-12.col-md-4.pull-right
+        .col-xs-6.col-sm-6.col-md-12
             h3 カテゴリ
             ul.categories
                 li.category(v-repeat="cat: cats" track-by="_id")
                     a(href="/article?category={{cat._id}}")
                         | {{cat.name_ja}}
 
-        .col-xs-6.col-sm-12
+        .col-xs-6.col-sm-6.col-md-12
             .tags
                 h3 タグ
                 ul.tags

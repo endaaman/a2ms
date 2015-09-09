@@ -103,7 +103,7 @@ main = [
         hero: 'narrow'
     views:
         content: require './view/article'
-    subs: [
+    subs:[
         url: '/'
     ,
         url: '/:slug'

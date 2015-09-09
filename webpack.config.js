@@ -89,8 +89,7 @@ module.exports = new function() {
     stats: { colors: true },
     proxy: {
       '/api/*': 'http://localhost:3000',
-      '/files/*': 'http://a2ms.local',
-      '/small_light*': 'http://a2ms.local'
+      '/files/*': 'http://a2ms.local'
     }
   };
 }
