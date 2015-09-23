@@ -1,7 +1,3 @@
-=hero-lg
-    padding-top: 80px
-    padding-bottom: 40px
-
 
 =hero-md
     padding-top: 60px
@@ -23,20 +19,15 @@
 
     z-index: $menu-z + 1
 
-    +hero-lg
     @media (max-width: $screen-xs-max)
         +hero-xs
 
     @media (min-width: $screen-xs-max) and (max-width: $screen-sm-max)
         +hero-sm
 
-    @media (min-width: $screen-sm-max) and (max-width: $screen-md-max)
+    @media (min-width: $screen-sm-max)
         +hero-md
 
-
-=title-lg
-    font-size: 96px
-    line-height: 120px
 
 =title-md
     font-size: 64px
@@ -69,14 +60,13 @@
         background-color: $color-green-strong
         color: $bg-color
 
-    +title-lg
     @media (max-width: $screen-xs-max)
         +title-xs
 
     @media (min-width: $screen-xs-max) and (max-width: $screen-sm-max)
         +title-sm
 
-    @media (min-width: $screen-sm-max) and (max-width: $screen-md-max)
+    @media (min-width: $screen-sm-max)
         +title-md
 
 .hero-narrow
