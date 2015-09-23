@@ -3,7 +3,7 @@ ol.crumbs
         a(href="/article") 記事一覧
         span.crumb-delimitter
             i.fa.fa-angle-right
-    li.crumb
+    li.crumb(v-if="resolved")
         a(href="/article/{{article.slug}}") {{article.title_ja}}
 
 .article(v-if="resolved")
