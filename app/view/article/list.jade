@@ -28,6 +28,8 @@ div(v-if="!empty")
             | 更新日 {{article.updated_at | date 'YYYY年M月DD日'}}
             | &nbsp;/&nbsp;
             | 投稿日 {{article.created_at | date 'YYYY年M月DD日'}}
+            span(v-if="article.draft")
+                | &nbsp;/&nbsp;下書き
 
 .text-muted(v-if="empty")
     .spacer
