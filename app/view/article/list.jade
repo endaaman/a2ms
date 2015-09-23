@@ -8,7 +8,7 @@ ol.crumbs
         a(href="/article?tag={{tag._id}}") {{tag.name_ja}}
     li.crumb(v-if="cat")
         | カテゴリー：
-        a(href="/article?cat={{cat._id}}") {{cat.name_ja}}
+        a(href="/article?category={{cat._id}}") {{cat.name_ja}}
     li.crumb(v-if="!tag && !cat")
         | すべて表示
 
