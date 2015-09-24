@@ -4,10 +4,20 @@ ol.crumbs
         span.crumb-delimitter
             i.fa.fa-angle-right
     li.crumb(v-if="resolved")
+        a(href="/article?category={{cat._id}}") {{cat.name_ja}}
+        span.crumb-delimitter
+            i.fa.fa-angle-right
+    li.crumb(v-if="resolved")
         a(href="/article/{{article.slug}}") {{article.title_ja}}
 
 .article(v-if="resolved")
     h1 {{article.title_ja}}
+    ul.list-inline
+        li
+            a(href="/article/{{article.slug}}" rel="external") Permalink
+        li(v-if="active")
+            a(href="/manage/article/{{article._id}}") 編集
+        
     table.table
         tr
             th 更新日

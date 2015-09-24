@@ -3,8 +3,11 @@ h2.nomt
     span(v-if="editing") 編集
     span(v-if="!editing") 追加
 
-p
-    a(href="/manage/article") 記事一覧へ戻る
+ul.list-inline
+    li
+        a(href="/manage/article") 記事一覧へ戻る
+    li(v-if="article && editing")
+        a(href="/article/{{article.slug}}") 記事ページへ
 
 form.row(v-if="article" v-on="submit: performSave($event)")
     .control-group
@@ -141,7 +144,7 @@ form.row(v-if="article" v-on="submit: performSave($event)")
                         v-on="click: confirmDelete()") 削除
 
 modal(shown="{{@ shownPreviewModal}}" title="{{title}}")
-    div(v-html="compiledContent")
+    .article(v-html="compiledContent")
         
 modal(shown="{{@ shownDeleteModal}}" title="記事の削除の確認")
     button.btn.btn-red(v-on="click: performDelete()")

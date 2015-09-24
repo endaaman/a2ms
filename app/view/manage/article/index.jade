@@ -5,21 +5,16 @@ p
 table.table(v-if="resolved")
     thead
         tr
-            th.text-left URL
-            th.text-left 和名
-            th.text-left 英名
+            th.text-left タイトル
             th タグ
             th カテゴリ
             th 状態
+            th 貼付け用
             th
     tbody
         tr(v-repeat="article: articles" track-by="_id")
             td
-                a(href="/article/{{article.slug}}") /article/{{article.slug}}
-            td
-                | {{article.title_ja}}
-            td
-                | {{article.title_en}}
+                a(href="/manage/article/{{article._id}}") {{article.title_ja}}
             td
                 .tips(v-if="article.tags.length > 0")
                     .tip(v-repeat="tag: tags | tagId article.tags")
@@ -30,5 +25,15 @@ table.table(v-if="resolved")
             td.text-center
                 span(v-if="article.draft") 下書き
                 span(v-if="!article.draft") 公開
-            td
-                a(href="/manage/article/{{article._id}}") 編集
+            td.nobr
+                ul.list-inline
+                    li
+                        button.btn.btn-small.btn-blue(
+                            v-copy="mdUrlJa(article)"
+                            v-on="aftercopy: onCopied($event)") 和題
+                    li
+                        button.btn.btn-small.btn-blue(
+                            v-copy="mdUrlEn(article)"
+                            v-on="aftercopy: onCopied($event)") 英題
+            td.nobr
+                a(href="/article/{{article.slug}}") 記事ページ

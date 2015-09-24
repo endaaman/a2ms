@@ -18,6 +18,15 @@ module.exports = Vue.extend
             name_ja: 'その他'
             name_en: 'Other'
 
+        mdUrlJa: (article)->
+            "[#{article.title_ja}](/article/#{article.slug})"
+
+        mdUrlEn: (article)->
+            "[#{article.title_en}](/article/#{article.slug})"
+
+        onCopied: (e)->
+            @$toast 'クリップボードにコピーしました'
+
     created: ->
         @$resolve
             articles: Article.get().then (res)->

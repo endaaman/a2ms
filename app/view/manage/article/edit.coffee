@@ -100,6 +100,7 @@ module.exports = Vue.extend
     rejected: ->
         @$router.go '/manage/article'
         @$toast '記事が見つかりませんでした', period: -1
+        
     resolved: ->
         @$watch 'article', ->
             @modified = true
