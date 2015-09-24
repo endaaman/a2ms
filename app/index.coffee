@@ -6,6 +6,8 @@ require './ga'
 Vue = require 'vue'
 Vue.use require 'vue-resource'
 Vue.use require 'vue-validator'
+# for IE
+Vue.http.headers.common['If-Modified-Since'] = 0
 
 spaseo = require 'spaseo.js'
 spaseo.wrap (cb)->
