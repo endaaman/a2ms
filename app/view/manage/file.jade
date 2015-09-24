@@ -20,17 +20,19 @@ table.table(v-if="resolved")
     thead
         tr
             th ファイル
+            th 種別
             th.text-left 記事貼り付け用にコピー
             th
     tbody
         tr(v-repeat="file: files")
             td
-                a(href="{{fileUrl(file)}}" target="_blank") {{file}}
+                a(href="/files/{{file}}" target="_blank") {{file}}
+            td {{getFileType(file)}}
             td
                 ul.list-inline.nomb
                     li
                         button.btn.btn-small.btn-blue(
-                            v-copy="baseUrl + file"
+                            v-copy="baseUrl + '/files/' + file"
                             v-on="aftercopy: onCopied($event)") URL
                     li
                         button.btn.btn-small.btn-blue(
@@ -39,17 +41,39 @@ table.table(v-if="resolved")
                     li
                         button.btn.btn-small.btn-blue(
                             v-if="isImage(file)"
-                            v-copy="mdThumb(file, false)"
+                            v-copy="mdThumb(file)"
                             v-on="aftercopy: onCopied($event)") サムネイル
                     li
                         button.btn.btn-small.btn-blue(
                             v-if="isImage(file)"
-                            v-copy="mdThumb(file, true)"
-                            v-on="aftercopy: onCopied($event)") リンク付きサムネイル
+                            v-copy="mdRaw(file)"
+                            v-on="aftercopy: onCopied($event)") 無圧縮
+                    li
+                        button.btn.btn-small.btn-blue(
+                            v-if="isEmbedable(file)"
+                            v-copy="mdEmbed(file)"
+                            v-on="aftercopy: onCopied($event)") 埋め込み用
             td
-                    button.btn.btn-red.btn-small(v-on="click: confirmDelete(file)") 削除
-                    
+                ul.list-inline.nomb
+                    li
+                        button.btn.btn-green.btn-small(v-on="click: openRenameModal(file)") リネーム
+                    li
+                        button.btn.btn-red.btn-small(v-on="click: openDeleteModal(file)") 削除
 
 modal(shown="{{@ shownDeleteModal}}" title="ファイルの削除の確認")
     button.btn.btn-red(v-on="click: performDelete(deletingFilename)")
         | {{deletingFilename}}を削除する
+
+modal(shown="{{@ shownRenameModal}}" title="ファイルの名前の変更")
+    form(v-on="submit: performRename($event)")
+        .control-group
+            .control-label 変更するファイル名
+            .control-static {{renamingFilename}}
+        .control-group
+            .control-label 新しいファイル名
+            input.control(
+                v-model="newFilename"
+                v-validate="required"
+                placeholder="新しいファイル名")
+        button.btn.btn-green(type="submit")
+            | {{renamingFilename}} → {{newFilename}} に名前を変更
