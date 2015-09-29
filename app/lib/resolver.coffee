@@ -5,17 +5,62 @@ u = require './util'
 
 ee = new EventEmitter2()
 pendings = []
+vms = []
+
+baseResolver =
+    append: (promise)->
+        pendings.push promise
+
+resolver = u.extend ee, baseResolver
+
+resolveAsPromise = (vm, promise)->
+    opt = vm.__proto__.constructor.options
+
+    pendings.push promise.then (results)->
+        for key, result of results
+            if typeof result is 'undefined'
+                e = new Error "You resolve undefined by `#{keyMap[i]}`"
+                console.warn e.stack
+            vm.$set key, result
+        vm.$set 'resolved', true
+        if typeof opt.resolved is 'function'
+            opt.resolved.call vm
+    , (err)->
+        vm.$set 'rejected', true
+        if typeof opt.rejected is 'function'
+            opt.rejected.call vm, err
 
 
+resolveAsDict = (vm, dictPromises)->
+    opt = vm.__proto__.constructor.options
+
+    keyMap = []
+    promises = []
+    for k, v of dictPromises
+        vm.$add k
+        keyMap.push k
+        promises.push v
+
+    pending = Promise.all promises
+    .then (results)->
+        for i, result of results
+            if typeof result is 'undefined'
+                e = new Error "You resolve undefined by `#{keyMap[i]}`"
+                console.warn e.stack
+            vm.$set keyMap[i], result
+        vm.$set 'resolved', true
+        if typeof opt.resolved is 'function'
+            opt.resolved.call vm
+    , (err)->
+        vm.$set 'rejected', true
+        if typeof opt.rejected is 'function'
+            opt.rejected.call vm, err
+        throw err
+
+    pendings.push pending
 
 
 module.exports = (Vue, options)->
-
-    baseResolver =
-        append: (promise)->
-            pendings.push promise
-
-    resolver = u.extend ee, baseResolver
 
     Vue.router.on '$pageUpdated', ->
         if pendings.length is 0
@@ -27,47 +72,34 @@ module.exports = (Vue, options)->
 
         Promise.all pendings
         .then ->
-            pendings = []
             resolver.emit '$resolved'
+            for vm in vms
+                vm.$emit '$resolved'
+            vms = []
+            pendings = []
             cb()
         , ->
-            pendings = []
             resolver.emit '$rejected'
-            cb()
+            for vm in vms
+                vm.$emit '$rejected'
+            vms = []
+            pendings = []
+            cb 404
 
     Vue.resolver = resolver
 
-    Vue.prototype.$resolve = (p)->
+    Vue.prototype.$resolve = (p1, p2)->
         vm = this
-        opt = vm.__proto__.constructor.options
-
-        if typeof p isnt 'object'
-            throw new Error 'Must provide object to `$resolve()`'
-            return
-
-        keyMap = []
-        promises = []
-        for k, v of p
-            vm.$add k
-            keyMap.push k
-            promises.push v
-
         vm.$add 'resolved'
         vm.$add 'rejected'
+        vms.push vm
 
-        pending = Promise.all promises
-        .then (results)->
-            for i, result of results
-                if typeof result is 'undefined'
-                    e = new Error "You resolve undefined by `#{keyMap[i]}`"
-                    console.warn e.stack
-                vm.$set 'resolved', true
-                vm.$set keyMap[i], result
-            if typeof opt.resolved is 'function'
-                opt.resolved.call vm
-        , (err)->
-            vm.$set 'rejected', true
-            if typeof opt.rejected is 'function'
-                opt.rejected.call vm, err
+        if p1.__proto__.constructor is Promise
+            resolveAsPromise vm, p1
+            return
 
-        pendings.push pending
+        if typeof p1 is 'object'
+            resolveAsDict this, p1
+            return
+
+        throw new Error 'You provide invalid pram(s) to `$resolve()`'
