@@ -2,17 +2,12 @@ spaseo = require 'spaseo.js'
 config = require '../config'
 env = require '../env'
 
-isFirstTime = false
-
 module.exports = (Vue)->
-    if env.isLocal or not spaseo.isOnPhantom
+    if env.isLocal or spaseo.isOnPhantom
         return
 
     window.ga 'create', config.trackingCode, 'auto'
 
     Vue.router.on '$pageUpdated', (context, next, past, status)->
-        if isFirstTime
-            window.ga 'send', 'pageview'
-        else
-            window.ga 'set', 'page', context.path
+        window.ga 'send', 'pageview', context.path
         isFirstTime = false
