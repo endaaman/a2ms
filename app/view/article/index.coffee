@@ -1,5 +1,4 @@
 Vue = require 'vue'
-marked = require 'marked'
 config = require '../../config'
 
 Tag = require '../../resource/tag'
@@ -8,10 +7,8 @@ Category = require '../../resource/category'
 module.exports = Vue.extend
     template: do require './index.jade'
     data: ->
-        active: @$auth.active()
         baseUrl: config.baseUrl
-        view: 'list'
-        nullCategory:
+        otherCategory:
             _id: null
             name_ja: 'その他'
             name_en: 'Other'
@@ -23,7 +20,7 @@ module.exports = Vue.extend
                 for cat in @cats
                     if cat._id is id
                         return cat
-            @nullCategory
+            @otherCategory
 
         getTagById: (id)->
             for tag in @tags
@@ -41,23 +38,10 @@ module.exports = Vue.extend
                     tags.push @getTagById id
             tags
 
-        getHtml: (article)->
-            marked article.content_ja
-
     created: ->
         @$resolve
             tags: Tag.get().then (res)->
                 res.data
             cats: Category.get().then (res)=>
-                res.data.push @nullCategory
+                res.data.push @otherCategory
                 res.data
-
-        @$on '$pageUpdated', (ctx)->
-            if ctx.params.slug?
-                @view = 'show'
-            else
-                @view = 'list'
-
-    components:
-        list: require './list'
-        show: require './show'

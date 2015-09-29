@@ -105,8 +105,12 @@ main = [
         content: require './view/article'
     subs:[
         url: '/'
+        views:
+            article_main: require './view/article/list'
     ,
         url: '/:slug'
+        views:
+            article_main: require './view/article/show'
     ]
 ]
 

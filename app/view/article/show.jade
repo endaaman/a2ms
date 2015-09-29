@@ -9,6 +9,8 @@ ol.crumbs
             i.fa.fa-angle-right
     li.crumb(v-if="resolved")
         a(href="/article/{{article.slug}}") {{article.title_ja}}
+    li.crumb(v-if="rejected")
+        | 記事が見つかりませんでした
 
 .article(v-if="resolved")
     h1 {{article.title_ja}}
@@ -26,4 +28,8 @@ ol.crumbs
             th 投稿日
             td {{article.created_at | date 'YYYY年M月DD日'}}
     
-    div(v-html="getHtml(article)")
+    div(v-html="content")
+
+div(v-if="rejected")
+    h1 Not Found
+    p 記事が見つかりませんでした。

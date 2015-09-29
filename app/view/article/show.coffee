@@ -1,28 +1,34 @@
 Vue = require 'vue'
+marked = require 'marked'
+
 Article = require '../../resource/article'
 
-module.exports =
-    inherit: true
+module.exports = Vue.extend
     template: do require './show.jade'
     data: ->
+        active: @$auth.active()
         tags: []
-        cat: @nullCategory
+        cat: null
         article: null
-        resolved: false
+
+    computed:
+        content: ->
+            if @article
+                marked @article.content_ja
+            else
+                ''
+
     created: ->
-        @pageUpdated = =>
-            @resolved = false
-            do @$loader
-            Article.get(id: @$context.params.slug).then (res)=>
-                a = res.data
-                @cat = @getCatFromArticle a
-                @tags = @getTagsFromArticle a
-                @article = a
-                @$loader false
-                @resolved = true
+        @$on '$resolved', ->
+            a = @article
+            @cat = @$parent.getCatFromArticle a
+            @tags = @$parent.getTagsFromArticle a
 
-        @$router.on '$pageUpdated', @pageUpdated
-        do @pageUpdated
+    updated: ->
+        @$resolve
+            article: Article.get(id: @$context.params.slug).then (res)->
+                res.data
 
-    destroyed: ->
-        @$router.off '$pageUpdated', @pageUpdated
+    resolved: ->
+        @$meta
+            title: @article.title_ja
