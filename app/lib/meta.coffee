@@ -59,11 +59,11 @@ module.exports = (Vue)->
     meta = (meta)->
         m = meta or {}
         setType m.type or 'website'
-        setSiteName m.site_name or config.siteName
+        setSiteName config.siteName
         setTitle m.title
         setUrl m.url or config.baseUrl + location.pathname
         setImage m.image
-        setDescription m.description
+        setDescription m.description or location.href
         setKeywords m.keywords
 
     Vue.meta = meta

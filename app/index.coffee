@@ -1,6 +1,5 @@
 require './style/index.sass'
 
-require './ga'
 (require './lib/font') 'Source Sans Pro': true
 
 Vue = require 'vue'
