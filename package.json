@@ -16,7 +16,7 @@
     "normalize.css": "^3.0.3",
     "page": "^1.6.3",
     "qs": "^5.1.0",
-    "spaseo.js": "^0.1.3",
+    "spaseo.js": "^0.1.4",
     "vue": "^0.12.15",
     "vue-resource": "^0.1.16",
     "vue-validator": "^1.4.3",
