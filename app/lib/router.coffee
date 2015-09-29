@@ -6,7 +6,7 @@ u = require './util'
 currentContext = null
 
 targetViews = {}
-attachedModels = {}
+attachedVms = {}
 currentRoute = null
 
 redirectHistory = {}
@@ -14,15 +14,19 @@ redirectHistory = {}
 __reload = false
 __started = false
 
-EventEmitter2 = (require 'eventemitter2')
+EventEmitter2 = require 'eventemitter2'
 events = new EventEmitter2()
 
 
 emitEvent = (ev, context, next, past, status)->
     events.emit ev, context, next, past, status
-    for name, model of attachedModels
-        model.$emit ev, context, next, past, status
+    for name, vm of attachedVms
+        vm.$emit ev, context, next, past, status
 
+callUpdateOfVm = (vm)->
+    opt = vm.__proto__.constructor.options
+    if typeof opt.updated is 'function'
+        opt.updated.call vm
 
 updatePage = (nextRoute, pastRoute, context)->
     status =
@@ -48,33 +52,39 @@ updatePage = (nextRoute, pastRoute, context)->
     attachedViews = {}
 
     for route in nextRoute.familyLine
-        for viewName, modelClass of route.views
+        for viewName, klass of route.views
             if attachedViews[viewName]
                 console.warn "Attached vb twice to the view whose name is `#{viewName}`"
 
-            if model = attachedModels[viewName]
-                if not __reload and model.__proto__.constructor is modelClass
+            if vm = attachedVms[viewName]
+                if not __reload and vm.__proto__.constructor is klass
                     attachedViews[viewName] = true
+                    callUpdateOfVm vm
                     continue
                 else
-                    model.$destroy true
+                    vm.$destroy true
 
             if targetView = targetViews[viewName]
-                model = new modelClass
-                    replace: !modelClass.options.replace? or !!modelClass.options.replace
+                vm = targetView.vm.$addChild
+                    replace: !klass.options.replace? or !!klass.options.replace
+                , klass
 
-                model.$mount().$appendTo targetView.el
-                attachedModels[viewName] = model
+                callUpdateOfVm vm
+
+                vm.$mount().$appendTo targetView.el
+                attachedVms[viewName] = vm
                 attachedViews[viewName] = true
             else
                 console.warn "The view named `#{viewName}` does not exist"
 
-    for viewName, model of attachedModels
+    for viewName, vm of attachedVms
         if not attachedViews[viewName]
-            model.$destroy true
-            delete attachedModels[viewName]
+            vm.$destroy true
+            delete attachedVms[viewName]
+
 
     emitEvent '$pageUpdated', context, nextRoute, pastRoute
+
     __reload = false
 
     true
@@ -170,7 +180,7 @@ routerBase =
 
     context: currentContext
 
-    views: attachedModels
+    views: attachedVms
 
 u.extend router, routerBase
 
