@@ -1,5 +1,5 @@
 Vue = require 'vue'
-config = require '../../../config'
+env = require '../../../env'
 
 Article = require '../../../resource/article'
 Category = require '../../../resource/category'
@@ -9,7 +9,7 @@ Tag = require '../../../resource/tag'
 module.exports = Vue.extend
     template: do require './index.jade'
     data: ->
-        baseUrl: config.baseUrl
+        baseUrl: env.baseUrl
     methods:
         getCat: (a)->
             for cat in @cats

@@ -1,7 +1,7 @@
 Vue = require 'vue'
 marked = require 'marked'
 
-config = require '../../../config'
+env = require '../../../env'
 
 Article = require '../../../resource/article'
 Category = require '../../../resource/category'
@@ -22,7 +22,7 @@ module.exports = Vue.extend
         shownDeleteModal: false
     computed:
         url: ->
-            config.baseUrl + '/article/' + @article.slug
+            env.baseUrl + '/article/' + @article.slug
     methods:
         performSave: (e)->
             e.preventDefault()
@@ -100,7 +100,7 @@ module.exports = Vue.extend
     rejected: ->
         @$router.go '/manage/article'
         @$toast '記事が見つかりませんでした', period: -1
-        
+
     resolved: ->
         @$watch 'article', ->
             @modified = true

@@ -1,4 +1,5 @@
 Vue = require 'vue'
+env = require '../../env'
 config = require '../../config'
 u = require '../../lib/util'
 
@@ -11,7 +12,7 @@ fileTypeMap =
 module.exports = Vue.extend
     template: do require './file.jade'
     data: ->
-        baseUrl: config.baseUrl
+        baseUrl: env.baseUrl
 
         tmpFiles: null
         shownDeleteModal: false

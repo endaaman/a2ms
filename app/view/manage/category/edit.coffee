@@ -1,5 +1,4 @@
 Vue = require 'vue'
-config = require '../../../config'
 
 Category = require '../../../resource/category'
 

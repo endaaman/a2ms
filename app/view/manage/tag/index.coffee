@@ -1,9 +1,10 @@
 Vue = require 'vue'
-config = require '../../../config'
+
+Tag = require '../../../resource/tag'
 
 module.exports = Vue.extend
     template: do require './index.jade'
     created: ->
         @$resolve
-            tags: @$http.get("#{config.api}/tags").then (res)->
+            tags: Tag.get().then (res)->
                 res.data
