@@ -3,7 +3,7 @@
   "scripts": {
     "start": "webpack-dev-server",
     "dev": "rm -rf build && webpack",
-    "prod": "rm -rf build && webpack -p",
+    "prod": "webpack -p",
     "clean": "rm -r build"
   },
   "dependencies": {
