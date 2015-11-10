@@ -3,6 +3,8 @@ u = require './lib/util'
 main = [
     url: '/'
     data:
+        layout:
+            hero: 'full'
         meta:
             title: 'HOME'
             keywords: ['大学', '医学部', '入試']
@@ -11,28 +13,36 @@ main = [
 ,
     url: '/login'
     data:
-        hero: false
-        menu: false
+        layout:
+            hero: false
+            menu: false
+            footer: false
     views:
         content: require './view/login'
 ,
     url: '/logout'
     data:
-        hero: false
-        menu: false
+        layout:
+            hero: false
+            menu: false
+            footer: false
     views:
         content: require './view/logout'
 ,
     url: '/signup'
     data:
-        hero: false
-        menu: false
+        layout:
+            hero: false
+            menu: false
+            footer: false
     views:
         content: require './view/signup'
 ,
     url: '/manage'
     data:
-        hero: false
+        layout:
+            hero: false
+            footer: false
         next: '/'
         meta:
             title: '管理'
@@ -99,8 +109,9 @@ main = [
 
 ,
     url: '/article'
-    data:
-        hero: 'narrow'
+    # data:
+    #     layout:
+    #         hero: true
     views:
         content: require './view/article'
     subs:[

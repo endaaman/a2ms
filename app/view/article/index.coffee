@@ -14,6 +14,8 @@ module.exports = Vue.extend
             name_en: 'Other'
             desc_ja: ''
             desc_en: ''
+
+        lang: @$i18n.current
     methods:
         getCatById: (id)->
             if id

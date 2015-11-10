@@ -1,5 +1,6 @@
 module.exports = (Vue)->
     (require './trailing_slash') Vue
+    (require './i18n') Vue
     (require './rule') Vue
     (require './href') Vue
     (require './title') Vue

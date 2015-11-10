@@ -7,16 +7,25 @@ module.exports = Vue.extend
         articles: []
         tag: null
         cat: null
+
+        lang: @$i18n.current
     computed:
         empty: ->
             @articles.length is 0
     methods:
         applyTitle: ->
-            title = '記事一覧'
-            if @tag
-                title = "タグ「#{@tag.name_ja}」"
-            else if @cat
-                title = "カテゴリー「#{@cat.name_ja}」"
+            if @$i18n.ja
+                title = '記事一覧'
+                if @tag
+                    title = "タグ「#{@tag.name_ja}」"
+                else if @cat
+                    title = "カテゴリー「#{@cat.name_ja}」"
+            else
+                title = 'Articles'
+                if @tag
+                    title = "Tag(#{@tag.name_en})"
+                else if @cat
+                    title = "Category(#{@cat.name_en})"
 
             @$meta
                 title: title

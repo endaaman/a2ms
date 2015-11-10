@@ -11,10 +11,11 @@ module.exports = Vue.extend
         cat: null
         article: null
 
+        lang: @$i18n.current
     computed:
         content: ->
             if @article
-                marked @article.content_ja
+                marked @article['content_'+@lang]
             else
                 ''
 
@@ -31,4 +32,4 @@ module.exports = Vue.extend
 
     resolved: ->
         @$meta
-            title: @article.title_ja
+            title: @article['title_'+@lang]

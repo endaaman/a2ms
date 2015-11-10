@@ -1,35 +1,48 @@
 Vue = require 'vue'
 
 module.exports = Vue.extend
+    template: do require './index.jade'
     data: ->
         active: @$auth.active()
+        menuFixed: false
+
         heroShown: true
         heroNarrow: false
         menuShown: true
-        menuFixed: false
+        footerShown: true
 
         items: [
             href: '/'
-            text: 'トップ'
+            text: if @$i18n.ja then 'トップ' else 'TOP'
             icon: 'home'
             regexp: /^\/$/
             userOnly: false
         ,
             href: '/article'
-            text: '記事'
+            text:  if @$i18n.ja then '記事' else 'ARTICLES'
             icon: 'book'
             regexp: /^\/article/
             userOnly: false
         ,
+            id: 'toggleLangauage'
+            text: if @$i18n.ja then 'ENGLISH' else '日本語'
+            icon: 'flag-o'
+        ,
             href: '/manage'
-            text: '管理'
+            text: if @$i18n.ja then '管理' else 'MANAGE'
             icon: 'cog'
             regexp: /^\/manage/
             userOnly: true
         ]
         activeItemIndex: -1
 
-    template: do require './index.jade'
+    methods:
+        menuClicked: (item)->
+            if item.id is 'toggleLangauage'
+                if @$i18n.current is 'ja'
+                    @$i18n.current = 'en'
+                else
+                    @$i18n.current = 'ja'
 
     created: ->
         @scroll = =>
@@ -40,16 +53,17 @@ module.exports = Vue.extend
         window.addEventListener 'scroll', @scroll
 
         @$on '$pageUpdated', (ctx, next)=>
-            @heroNarrow = next.data.hero is 'narrow'
-            @heroShown = next.data.hero isnt false
-            @menuShown = next.data.menu isnt false
+            @heroNarrow = next.data.layout?.hero is true
+            @heroShown = next.data.layout?.hero isnt false
+            @menuShown = next.data.layout?.menu isnt false
+            @footerShown = next.data.layout?.footer isnt false
             @scroll()
             if not @heroShown and @menuShown
                 @menuFixed = true
 
             @activeItemIndex = -1
             for i, item of @items
-                if item.regexp.test @$context.path
+                if item.regexp and item.regexp.test @$context.path
                     @activeItemIndex = i
                     break
 

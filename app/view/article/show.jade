@@ -1,19 +1,22 @@
 ol.crumbs
     li.crumb
-        a(href="/article") 記事一覧
+        a(href="/article")= i18n.ja ? '記事一覧' : 'Articles'
         span.crumb-delimitter
             i.fa.fa-angle-right
     li.crumb(v-if="resolved")
-        a(href="/article?category={{cat._id}}") {{cat.name_ja}}
+        a(href="/article?category={{cat._id}}") {{cat['name_'+lang]}}
         span.crumb-delimitter
             i.fa.fa-angle-right
     li.crumb(v-if="resolved")
-        a(href="/article/{{article.slug}}") {{article.title_ja}}
+        a(href="/article/{{article.slug}}") {{article['title_'+lang]}}
     li.crumb(v-if="rejected")
-        | 記事が見つかりませんでした
+        if i18n.ja
+            | 記事が見つかりませんでした
+        if i18n.en
+            | Not found
 
 .article(v-if="resolved")
-    h1 {{article.title_ja}}
+    h1 {{article['title_'+lang]}}
     ul.list-inline
         li
             a(href="/article/{{article.slug}}" rel="external") Permalink
@@ -21,15 +24,23 @@ ol.crumbs
             a(href="/manage/article/{{article._id}}") 編集
         
     table.table
-        tr
-            th 更新日
-            td {{article.updated_at | date 'YYYY年M月DD日'}}
-        tr
-            th 投稿日
-            td {{article.created_at | date 'YYYY年M月DD日'}}
-    
+        if i18n.ja
+            tr
+                th 更新日
+                td {{article.updated_at | date 'YYYY年M月DD日'}}
+            tr
+                th 投稿日
+                td {{article.created_at | date 'YYYY年M月DD日'}}
+        if i18n.en
+            tr
+                th Updated at
+                td {{article.updated_at | date 'MMM Do, YYYY'}}
+            tr
+                th Created at
+                td {{article.created_at | date 'MMM Do, YYYY'}}
+
     div(v-html="content")
 
 div(v-if="rejected")
     h1 Not Found
-    p 記事が見つかりませんでした。
+    p No content
