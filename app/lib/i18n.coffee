@@ -9,8 +9,8 @@ module.exports = (Vue)->
 
     storageKey = config.i18nKey
 
-    current = null
     defaultLang = 'ja'
+    current = defaultLang
 
     storedLang = localStorage.getItem storageKey
     if validCode storedLang
@@ -19,17 +19,13 @@ module.exports = (Vue)->
         browserLanguage = window.navigator.userLanguage or \
             window.navigator.language or \
             window.navigator.browserLanguage
+
         if browserLanguage
             code = browserLanguage.substr 0, 2
+            if validCode code
+                current = code
 
-        if browserLanguage and validCode code
-            current = code
-        else
-            current = defaultLang
         localStorage.setItem storageKey, current
-
-    if not validCode current
-        throw new Error '何かおかしい'
 
     i18n = {}
     Object.keys(listCodes).forEach (code)->

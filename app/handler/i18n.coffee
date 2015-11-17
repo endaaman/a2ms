@@ -3,6 +3,8 @@ u = require '../lib/util'
 
 module.exports = (Vue)->
     Vue.router.on '$pageUpdating', (ctx, next, past, status)->
+        if not ctx.init
+            return
         q = u.extend {}, ctx.query
         if q.lang
             changed = Vue.i18n.update q.lang, false
