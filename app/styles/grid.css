@@ -1,0 +1,16 @@
+.row {
+  lost-utility: clearfix;
+  width: 100%;
+}
+
+.col2 {
+  @media (min-width: 500px) {
+    lost-column: 1/2;
+  }
+}
+
+.col3 {
+  @media (min-width: 500px) {
+    lost-column: 1/3;
+  }
+}

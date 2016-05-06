@@ -1,0 +1,218 @@
+@import "./variables.css";
+
+
+@define-mixin placeholder-color $color {
+  &::-webkit-input-placeholder {
+    color: $color;
+  }
+  &:-moz-placeholder {
+    color: $color;
+     opacity:  1;
+  }
+  &::-moz-placeholder {
+    color: $color;
+     opacity:  1;
+  }
+  &:-ms-input-placeholder {
+    color: $color;
+  }
+}
+
+$border-color: #6B7D7D;
+$border-active-color: #114B5F;
+/*37be8d*/
+/*1A936F*/
+
+.text {
+  margin: 16px 0;
+  position: relative;
+  input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    outline: none;
+    border: 0;
+    display: block;
+    width: 100%;
+    color: inherit;
+    padding: 12px 6px;
+    line-height: 16px;
+    border: solid 1px $border-color;
+    border-radius: 2px;
+    background-color: #fff;
+
+    @mixin placeholder-color $border-color;
+
+    /*transition: padding .2s ease;*/
+  }
+  label {
+    position: absolute;
+    top: 14px;
+    left: 6px;
+    font-size: 14px;
+    line-height: 16px;
+    color: $border-color;
+    pointer-events: none;
+    transition: top .2s ease;
+  }
+
+
+  input:focus {
+    border-color: $border-active-color;
+  }
+
+  input.filled {
+    padding: 20px 6px 4px;
+    & ~ label {
+      top: 4px;
+      font-size: 11px;
+    }
+  }
+
+  input.filled:focus ~ label{
+    color: $border-active-color;
+  }
+
+  .required {
+    position: absolute;
+    top: 14px;
+    right: 6px;
+    font-size: 12px;
+    line-height: 16px;
+    padding: 0 4px;
+    border-radius: 2px;
+    background-color: #CE2D4F;
+    color: #fff;
+  }
+}
+
+
+
+.checkbox {
+  $toggler-outer-size: 16px;
+  $toggler-inner-size: 10px;
+
+  margin: 8px 0;
+  input {
+    width: 0;
+    height: 0;
+    margin: 0;
+    border: 0;
+    position: absolute;
+    visiblity: hidden;
+    pointer-events: none;
+  }
+  label {
+    display: inline-block;
+    user-select: none;
+    position: relative;
+    padding: 8px;
+    padding-left: calc($toggler-outer-size + 7px);
+    margin-right: 12px;
+    cursor: pointer;
+    &:before, &:after {
+      content: '';
+      display: block;
+      position: absolute;
+    }
+    &:before {
+      top: 50%;
+      left: 0;
+      margin-top: calc(-$toggler-outer-size / 2);
+      width: $toggler-outer-size;
+      height: $toggler-outer-size;
+      border: 1px solid $border-color;
+      background-color: #fff;
+      border-radius: 2px;
+    }
+
+    &:after {
+      top: 50%;
+      left: 0;
+      margin-top: calc(-$toggler-inner-size / 2);
+      margin-left: calc(($toggler-outer-size - $toggler-inner-size) / 2);
+      width: $toggler-inner-size;
+      height: $toggler-inner-size;
+      background-color: $border-active-color;
+      opacity: 0;
+    }
+  }
+  input:checked + label:after {
+    opacity: 1;
+  }
+}
+
+.select {
+  margin: 16px 0;
+  select {
+    padding: 6px 6px;
+    line-height: 16px;
+    border: solid 1px $border-color;
+    border-radius: 2px;
+    background-color: #fff;
+  }
+}
+
+.button {
+  button {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    v-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    user-select: none;
+
+    padding: 8px;
+    line-height: 16px;
+    border: solid 1px $border-color;
+    border-radius: 2px;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+
+    &[disabled] {
+      cursor: not-allowed;
+      opacity: .5;
+      box-shadow: none;
+    }
+  }
+}
+
+
+
+.editor {
+  margin: 8px 0;
+  & > textarea {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    outline: none;
+    border: 0;
+    display: block;
+    width: 100%;
+    color: inherit;
+    padding: 8px;
+    line-height: 16px;
+    border: solid 1px $border-color;
+    border-radius: 2px;
+    background-color: #fff;
+
+    min-height: 320px;
+
+    @mixin placeholder-color $border-color;
+    @mixin monospace;
+
+  }
+}

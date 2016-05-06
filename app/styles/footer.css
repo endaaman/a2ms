@@ -1,0 +1,34 @@
+.shadow {
+  width: 100%;
+  margin-top: 32px;
+}
+
+.footer {
+  font-size: 12px;
+  background-color: #114B5F;
+  position: absolute;
+  bottom: 0;
+  height: $footerHeight;
+  width: 100%;
+  color: #CCDBDC;
+  a {
+    text-decoration: underline;
+    color: #CCDBDC;
+  }
+  hr {
+    border-color: #CCDBDC;
+  }
+}
+
+
+.column {
+  /*padding: 0 8px;*/
+  @media (min-width: 500px) {
+    lost-column: 1/3;
+  }
+  @media (max-width: 500px) {
+    &:not(:last-child) {
+      border-bottom: solid 1px #CCDBDC;
+    }
+  }
+}

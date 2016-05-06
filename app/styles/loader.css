@@ -1,0 +1,29 @@
+
+@keyframes loader-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+$size: 60px;
+$weight: 3px;
+
+.loader{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: calc( -$size / 2);
+    margin-top: calc( -$size / 2);
+    border-width: $weight;
+    border-style: solid;
+    border-color: transparent;
+    border-top-color: #E75A7C;
+    width: $size;
+    height: $size;
+    border-radius: calc( $size / 2);
+
+    animation: loader-rotate .3s linear infinite;
+}

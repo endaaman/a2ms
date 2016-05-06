@@ -1,0 +1,12 @@
+.listInline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  li {
+    float: left;
+    &:not(:last-child) {
+      margin-right: 8px;
+    }
+  }
+}

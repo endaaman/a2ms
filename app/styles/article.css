@@ -1,0 +1,44 @@
+.content {
+  
+  p {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  li {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  :not(pre) > code {
+    padding: 0 2px;
+    margin: 0 2px;
+    color: brown;
+    background-color: #d9d9d9;
+    white-space: nowrap;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+
+.sidebar {
+  padding: 0 8px;
+  @media (min-width: 500px) and (max-width: 800px) {
+    lost-column: 1/3;
+  }
+  @media (min-width: 800px) {
+    lost-column: 1/4;
+  }
+}
+
+.contentWithSidebar {
+  padding: 0 8px;
+  @media (min-width: 500px) and (max-width: 800px) {
+    lost-column: 2/3;
+  }
+  @media (min-width: 800px) {
+    lost-column: 3/4;
+  }
+}

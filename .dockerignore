@@ -1,6 +1,6 @@
-build/
+build
+node_modules
 npm-debug.log
-node_modules/
 
 webpack-stats.json
 webpack-assets.json

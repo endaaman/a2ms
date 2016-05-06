@@ -1,0 +1,13 @@
+.sidebar {
+  padding: 0 8px;
+  @media (min-width: 500px) {
+    lost-column: 1/4;
+  }
+}
+
+.main {
+  padding: 0 8px;
+  @media (min-width: 500px) {
+    lost-column: 3/4;
+  }
+}

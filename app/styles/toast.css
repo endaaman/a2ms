@@ -1,0 +1,42 @@
+$y: 10px;
+$h: 30px;
+
+@keyframes toast-toggle {
+  from {
+    transform: translateX(-50%) rotateX(-90deg);
+  }
+  to {
+    transform: translateX(-50%) rotateX(0deg);
+  }
+}
+
+.enter {
+  animation: toast-toggle .3s;
+}
+
+
+.leave {
+  animation: toast-toggle .3s reverse;
+}
+
+
+.toast {
+    left: 50%;
+    height: $h;
+    line-height: $h;
+    z-index: 1000;
+    position: fixed;
+    min-width: 320px;
+    max-width: 600px;
+    width: 50%;
+
+    text-align: center;
+
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, .6);
+    color: #ccc;
+    border-radius: calc($h / 2);
+
+    bottom: $y;
+    transform: translateX(-50%);
+}

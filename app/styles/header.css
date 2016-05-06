@@ -1,0 +1,99 @@
+.header {
+  height: 48px;
+  lost-utility: clearfix;
+  position: relative;
+}
+
+.logo {
+  font-family: 'Oswald' sans-serif;
+  float: left;
+  position: relative;
+  display: block;
+  color: inherit;
+  height: 48px;
+  width: 200px;
+  img {
+    display: block;
+    height: 48px;
+    width: 48px;
+    position: absolute;
+  }
+  h1 {
+    position: absolute;
+    left: 48px;
+    top: 0;
+    padding: 0;
+    margin: 0;
+    height: 32px;
+    line-height: 32px;
+    color: #6b7d7d;
+    font-size: 24px;
+  }
+  .logoText {
+    position: absolute;
+    left: 40px;
+    top: 32px;
+    color: #6b7d7d;
+    height: 16px;
+    line-height: 16px;
+    font-size: 12px;
+    white-space: nowrap;
+    padding-left: -20px;
+  }
+}
+
+
+.languageSwitcher {
+  float: right;
+  lost-utility: clearfix;
+
+  position: relative;
+  margin-top: 8px;
+  height: 32px;
+
+  border: solid 2px #114B5F;
+  border-radius: 2px;
+  .active, .inactive {
+    float: left;
+    a {
+      cursor: pointer;
+      display: block;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+      padding: 0 24px;
+      @media (max-width: 500px) {
+        padding: 0 12px;
+      }
+    }
+  }
+
+  .active {
+    background-color: #114B5F;
+    a {
+      color: #fff;
+    }
+  }
+  .inactive {
+    background-color: transparent;
+  }
+}
+
+.switchToJa:before {
+  content: 'JAPANESE';
+  @media (max-width: 500px) {
+    content: 'JA';
+  }
+}
+
+.switchToEn:before {
+  content: 'ENGLISH';
+  @media (max-width: 500px) {
+    content: 'EN';
+  }
+}
+
+.sub {
+  height: 2px;
+  background-color: #114B5F;
+}

@@ -1,0 +1,7 @@
+a2ms:
+  build: .
+  environment:
+    VIRTUAL_HOST: a2ms.med.hokudai.ac.jp,a2ms.endaaman.me,a2ms.local
+  # extra_hosts:
+  #   - 'api.enda.local:172.17.0.1'
+  restart: always

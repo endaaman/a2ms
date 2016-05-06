@@ -1,0 +1,52 @@
+.header {
+  margin: 0;
+  padding: 20px 0 12px;
+  background-color: #BBC7A4;
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  margin-bottom: 6px;
+  font-size: 32px;
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+.digest {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+}
+
+.date {
+  margin-top: 7px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.content {
+  p {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  li {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  :not(pre) > code {
+    padding: 0 2px;
+    margin: 0 2px;
+    color: brown;
+    background-color: #d9d9d9;
+    white-space: nowrap;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+}

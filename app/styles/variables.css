@@ -1,0 +1,9 @@
+
+
+@define-mixin sans-serif {
+  font-family: Ubuntu, 'Helvetica Neue', "Hiragino Kaku Gothic ProN", Meiryo, Arial, sans-serif;
+}
+
+@define-mixin monospace {
+  font-family: 'Ubuntu Mono', consolas, 'Courier New', Courier, monospace;
+}
