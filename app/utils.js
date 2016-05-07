@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
-import queryString from 'query-string'
+
 
 export function uuid(a) {
   return a
