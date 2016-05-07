@@ -48,9 +48,10 @@ class ManageArticleEdit extends Component {
 
   deleteArticle() {
     const { dispatch, article } = this.props
+    const articleName = article.name_ja
     dispatch(deleteArticle(article._id))
     .then(()=> {
-      dispatch(showToast(`deleted "${article.name_ja}"`))
+      dispatch(showToast(`deleted "${articleName}"`))
       this.context.router.push('/manage/article')
     }, err => {
       dispatch(showToast('Something wrong'))
