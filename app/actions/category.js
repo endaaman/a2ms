@@ -8,10 +8,7 @@ export const DROP_CATEGORYLIST = Symbol()
 
 export const ADD_CATEGORY = Symbol()
 export const SET_CATEGORY = Symbol()
-export const DELETE_CATEGORY = Symbol()
-
-// SHARED ACTION TYPE
-export const UNLINK_CATEGORY_RELATION = Symbol()
+export const DELETE_CATEGORY = Symbol() // This actions is shared with article
 
 
 export function dropCategories() {
@@ -65,10 +62,6 @@ export function deleteCategory(id) {
       dispatch(hideLoader())
       dispatch({
         type: DELETE_CATEGORY,
-        id: id,
-      })
-      dispatch({
-        type: UNLINK_CATEGORY_RELATION,
         id: id,
       })
     }, error => {
