@@ -16,7 +16,8 @@ import Sidebar from '../components/sidebar'
 
 import { getArticles } from '../actions/article'
 import { getCategories } from '../actions/category'
-import { findItemBySlug, getMarkdownRenderers } from '../utils'
+import { applyQuery } from '../lib/localization'
+import { findItemBySlug, getMarkdownRenderers, isInnerLink } from '../utils'
 
 import styles from '../styles/article.css'
 
@@ -31,7 +32,7 @@ class Article extends Component {
   }
 
   render() {
-    const { article, ja, query } = this.props
+    const { article, ja, qq } = this.props
     const title = ja ? article.title_ja : article.title_en
     const content = ja ? article.content_ja : article.content_en
     return (
@@ -47,9 +48,7 @@ class Article extends Component {
             <h1>{title}</h1>
             <MarkdownComponent
               source={content || ''}
-              renderers={getMarkdownRenderers({
-                transformHref: href => href + query
-              })}/>
+              renderers={getMarkdownRenderers({transformHref: qq})}/>
           </div>
         </Container>
         <Footer />
@@ -60,7 +59,7 @@ class Article extends Component {
 
 export default connect((state, ownProps) => ({
   ja: state.locale.ja,
-  query: state.locale.query,
+  qq: applyQuery[state.locale.code],
   category: ownProps.params.categorySlug === '-'
     ? null
     : findItemBySlug(state.category.items, ownProps.params.categorySlug, {}),

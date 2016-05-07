@@ -14,6 +14,7 @@ import Container from '../components/container'
 import { getArticles } from '../actions/article'
 import { getCategories } from '../actions/category'
 import { getNewss } from '../actions/news'
+import { getText, applyQuery } from '../lib/localization'
 import { getMarkdownRenderers, isInnerLink } from '../utils'
 
 import styles from '../styles/home.css'
@@ -42,8 +43,8 @@ class CategoryPanels extends Component {
 
 class NewsList extends Component {
   render() {
-    const { newss, locale: { ja, query, getText } } = this.props
-    const $ = getText
+    const { newss, locale: {code, ja} } = this.props
+    const qq = applyQuery[code]
     return (
       <div className={styles.newsList}>
         <ul>
@@ -55,7 +56,7 @@ class NewsList extends Component {
                   <div className={styles.newsDate}>{dateFormat(n.date, (ja ? 'yyyy.m.d' : 'mmmm d, yyyy'))}</div>
                   {
                     n.url
-                      ? <Link to={isInnerLink(n.url) ? n.url + query : n.url}>{message}</Link>
+                      ? <Link to={isInnerLink(n.url) ? qq(n.url) : n.url}>{message}</Link>
                       : <span>{message}</span>
                   }
                 </li>
@@ -80,9 +81,7 @@ class Home extends Component {
     this.constructor.loadProps(this.props)
   }
   render() {
-    const { categories, newss, locale } = this.props
-    const { ja, query } = locale
-    const $ = locale.getText
+    const { categories, newss, locale, $ } = this.props
     return (
       <div>
         <Helmet
@@ -107,6 +106,7 @@ class Home extends Component {
 export default connect(state => ({
   active: !!state.session.user,
   locale: state.locale,
+  $: getText[state.locale.code],
   newss: state.news.items,
   categories: state.category.items,
 }))(Home)

@@ -15,6 +15,7 @@ import NotFound from '../components/not_found'
 import Sidebar from '../components/sidebar'
 
 import { getCategories } from '../actions/category'
+import { applyQuery } from '../lib/localization'
 import { findItemBySlug, getMarkdownRenderers } from '../utils'
 
 import styles from '../styles/article.css'
@@ -29,7 +30,7 @@ class Article extends Component {
   }
 
   render() {
-    const { ja, query, categories, category } = this.props
+    const { ja, qq, categories, category } = this.props
     const name = ja ? category.name_ja : category.name_en
     return (
       <div>
@@ -50,7 +51,7 @@ class Article extends Component {
 
 export default connect((state, ownProps) => ({
   ja: state.locale.ja,
-  query: state.locale.query,
+  qq: applyQuery[state.locale.code],
   categories: state.category.items,
   category: findItemBySlug(state.category.items, ownProps.params.slug, {}),
 }))(Article)

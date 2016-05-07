@@ -4,8 +4,9 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
 import Container from './container'
-import { isOnServer } from '../utils'
 import { getArticles } from '../actions/article'
+import { getText, applyQuery } from '../lib/localization'
+import { isOnServer } from '../utils'
 
 import styles from '../styles/footer.css'
 import grid from '../styles/grid.css'
@@ -58,7 +59,7 @@ class Footer extends Component {
   }
 
   render() {
-    const { active, $, ja, articles, query } = this.props
+    const { active, $, ja, articles, qq } = this.props
     return (
       <footer>
         <div className={styles.shadow} style={{height: this.state.footerHeight}}></div>
@@ -67,10 +68,10 @@ class Footer extends Component {
             <div className={styles.column}>
               <h3>{$('Sitemap')}</h3>
               <ul>
-                <li><Link to={`/${query}`}>{$('TOP')}</Link></li>
+                <li><Link to={qq(`/`)}>{$('TOP')}</Link></li>
                 {
                   articles.map(a => (
-                    <li key={a._id}><Link to={`/-/${a.slug}${query}`}>{ja ? a.title_ja : a.title_en}</Link></li>
+                    <li key={a._id}><Link to={qq(`/-/${a.slug}`)}>{ja ? a.title_ja : a.title_en}</Link></li>
                   ))
                 }
               </ul>
@@ -121,7 +122,7 @@ export default connect((state, ownProps)=> {
     active: !!state.session.user,
     articles: state.article.items.filter(c => !c.category),
     ja: state.locale.ja,
-    query: state.locale.query,
-    $: state.locale.getText,
+    qq: applyQuery[state.locale.code],
+    $: getText[state.locale.code],
   }
 })(Footer)

@@ -6,6 +6,7 @@ import { findDOMNode } from 'react-dom'
 import Container from '../components/container'
 import { HardWrap } from '../components/utils'
 
+import { getText } from '../lib/localization'
 import { isOnServer } from '../utils'
 import styles from '../styles/hero.css'
 
@@ -30,5 +31,5 @@ class Hero extends Component {
 
 
 export default connect(state => ({
-  $: state.locale.getText
+  $: getText[state.locale.code]
 }))(Hero)

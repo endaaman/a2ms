@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Helmet from 'react-helmet'
-import { connect } from 'react-redux'
 import queryString from 'query-string'
+import { connect } from 'react-redux'
 
 import Header from './header'
 import Footer from './footer'

@@ -5,7 +5,7 @@ import Helmet from 'react-helmet'
 
 import { getArticles } from '../actions/article'
 import { getCategories } from '../actions/category'
-
+import { applyQuery } from '../lib/localization'
 import styles from '../styles/home.css'
 
 
@@ -29,7 +29,7 @@ class Sidebar extends Component {
 
 
   render() {
-    const { categories, articles, ja, query, className } = this.props
+    const { categories, articles, ja, qq, className } = this.props
     return (
       <div className={className}>
         <ul>
@@ -40,12 +40,12 @@ class Sidebar extends Component {
                 ? null
                 : (
                   <li key={c._id}>
-                    <h3><Link to={`/${c.slug}${query}`}>{ja ? c.name_ja : c.name_en}</Link></h3>
+                    <h3><Link to={qq(`/${c.slug}`)}>{ja ? c.name_ja : c.name_en}</Link></h3>
                     <ul>
                       {
                         relatedArticles.map(a => (
                           <li key={a._id}>
-                            <Link to={`/${c.slug}/${a.slug}${query}`}>{ja ? a.title_ja : a.title_en}</Link>
+                            <Link to={qq(`/${c.slug}/${a.slug}`)}>{ja ? a.title_ja : a.title_en}</Link>
                           </li>
                         ))
                       }
@@ -62,7 +62,7 @@ class Sidebar extends Component {
 
 export default connect(state => ({
   ja: state.locale.ja,
-  query: state.locale.query,
+  qq: applyQuery[state.locale.code],
   articles: state.article.items,
   categories: state.category.items,
 }))(Sidebar)
