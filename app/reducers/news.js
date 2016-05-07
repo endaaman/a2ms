@@ -32,35 +32,35 @@ export default (state = {
 }, action) => {
   switch (action.type) {
     case START_FETCHING_NEWSLIST:
-      return Object.assign({}, state, {
+      return {...state, ...{
         promise: action.promise,
-      })
+      }}
     case RECIEVE_NEWSLIST:
-      return Object.assign({}, state, {
+      return {...state, ...{
         items: action.items,
         promise: null,
-      })
+      }}
     case DROP_NEWSLIST:
-      return Object.assign({}, state, {
+      return {...state, ...{
         items: [],
-      })
+      }}
     case ADD_NEWS:
-      return Object.assign({}, state, {
+      return {...state, ...{
         items: sortByDate([...state.items, action.item])
-      })
+      }}
     case SET_NEWS:
-      return Object.assign({}, state, {
+      return {...state, ...{
         items: sortByDate(state.items.map((item)=> {
           if (item._id === action.item._id) {
             return action.item
           }
           return item
         }))
-      })
+      }}
     case DELETE_NEWS:
-      return Object.assign({}, state, {
+      return {...state, ...{
         items: state.items.filter((item)=> item._id !== action.id )
-      })
+      }}
 
     default:
       return state

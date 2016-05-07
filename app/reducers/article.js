@@ -2,11 +2,33 @@ import {
   START_FETCHING_ARTICLELIST,
   RECIEVE_ARTICLELIST,
   DROP_ARTICLELIST,
+  ADD_ARTICLE,
+  SET_ARTICLE,
+  DELETE_ARTICLE,
 } from '../actions/article'
 
 import {
-  UNLINK_CATEGORY_RELATION
+  DELETE_CATEGORY
 } from '../actions/category'
+
+function sort(files) {
+  files.sort((a, b)=> {
+    if (a.order < b.order) {
+      return 1
+    }
+    if (a.order > b.order) {
+      return -1
+    }
+    if (a.created_at < b.created_at) {
+      return -1
+    }
+    if (a.created_at > b.created_at) {
+      return 1
+    }
+    return 0
+  })
+  return files
+}
 
 
 export default (state = {
@@ -14,33 +36,47 @@ export default (state = {
   promise: null,
 }, action) => {
   switch (action.type) {
-    case UNLINK_CATEGORY_RELATION:
-      return Object.assign({}, state, {
+    case DELETE_CATEGORY:
+      return {...state, ...{
         items: state.items.map(item => {
           if (item.category === action.id) {
-            return Object.assign({}, item, {
+            return {...item, ...{
               category: null
-            })
+            }}
           } else {
             return item
           }
         })
-      })
+      }}
 
     case START_FETCHING_ARTICLELIST:
-      return Object.assign({}, state, {
+      return {...state, ...{
         promise: action.promise
-      })
+      }}
     case RECIEVE_ARTICLELIST:
-      return Object.assign({}, state, {
+      return {...state, ...{
         items: action.items,
         promise: null
-      })
+      }}
     case DROP_ARTICLELIST:
-      return Object.assign({}, state, {
+      return {...state, ...{
         items: [],
         promise: null
-      })
+      }}
+
+    case ADD_ARTICLE:
+      return {...state, ...{
+        items: sort([state.items, action.item])
+      }}
+    case SET_ARTICLE:
+      return {...state, ...{
+        items: sort(state.items.map(item => item._id === action.item._id ? action.item : item))
+      }}
+    case DELETE_ARTICLE:
+      return {...state, ...{
+        items: state.items.filter(item => item._id !== action.id )
+      }}
+
     default:
       return state
   }

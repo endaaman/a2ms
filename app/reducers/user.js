@@ -16,9 +16,9 @@ export default (state = [], action) => {
     case REJECT_USER:
       return state.map(user => {
         if (user._id === action.id) {
-          return Object.assign({}, user, {
+          return {...user, ...{
             approved: action.type === APPROVE_USER
-          })
+          }}
         } else {
           return user
         }

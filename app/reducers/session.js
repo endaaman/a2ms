@@ -10,13 +10,13 @@ export default (state = {
 }, action) => {
   switch (action.type) {
     case CREATE_SESSION:
-      return Object.assign({}, state, {
+      return {...state, ...{
         user: action.user,
-      })
+      }}
     case DELETE_SESSION:
-      return Object.assign({}, state, {
+      return {...state, ...{
         user: null,
-      })
+      }}
     default:
       return state
   }
