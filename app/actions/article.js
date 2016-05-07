@@ -59,7 +59,6 @@ export function deleteArticle(id) {
     dispatch(showLoader())
     return Http().delete(`${api()}/articles/${id}`)
     .then(() => {
-      dispatch(dropArticles())
       dispatch(hideLoader())
       dispatch({
         type: DELETE_ARTICLE,
@@ -77,7 +76,7 @@ function uploadArticle(id, item) {
     dispatch(showLoader())
 
     // NOTE: This transformation should be done on server side
-    const data = Object.assign({}, item)
+    const data = {...item}
     if (data.category === '') {
       data.category = null
     }
@@ -89,7 +88,6 @@ function uploadArticle(id, item) {
       data: data,
     }).then(res => {
       const item = res.data
-      dispatch(dropArticles())
       dispatch(hideLoader())
       if (updating) {
         dispatch({
