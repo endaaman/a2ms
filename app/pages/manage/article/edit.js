@@ -17,8 +17,10 @@ class ManageArticleEdit extends Component {
     router: React.PropTypes.object.isRequired
   }
   static loadProps({dispatch, params}) {
-    return dispatch(getArticles())
-    .then(dispatch(getCategories()))
+    return Promise.all([
+      dispatch(getArticles()),
+      dispatch(getCategories()),
+    ])
   }
   componentWillMount() {
     this.constructor.loadProps(this.props)
@@ -75,7 +77,6 @@ class ManageArticleEdit extends Component {
         <p><Link to="/manage/article">一覧に戻る</Link></p>
         <ArticleForm article={article} categories={categories} onSubmit={this.onSubmit.bind(this)} />
         <hr />
-        <p>このカテゴリに含まれる記事は、その関連が全て解除されます</p>
         <Button onClick={this.openModal.bind(this)}>Delete</Button>
         <Modal
           isOpen={this.state.modalIsOpen}

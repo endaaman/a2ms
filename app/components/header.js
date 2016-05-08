@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { findDOMNode } from 'react-dom'
 import cx from 'classnames'
 
-import Container from '../components/container'
+import Container from './container'
 import styles from '../styles/header.css'
 
 class Header extends Component {
@@ -14,7 +14,7 @@ class Header extends Component {
   render() {
     const { ja, pathname } = this.props
     return (
-      <header className={styles.header}>
+      <div className={styles.header}>
         <Container>
           <Link to={ja ? '/' : '/?en'} className={styles.logo}>
             <img src={require('../assets/logo.svg')} />
@@ -30,7 +30,7 @@ class Header extends Component {
             </div>
           </div>
           </Container>
-      </header>
+      </div>
     )
   }
 }

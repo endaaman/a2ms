@@ -24,12 +24,14 @@ class ManageCategoryNew extends Component {
       dispatch(showToast('作成に失敗しました'))
     })
   }
+
   render() {
+    const { articles } = this.props
     return (
       <div>
         <h1>カテゴリの新規作成</h1>
         <p><Link to="/manage/category">一覧に戻る</Link></p>
-        <CategoryForm category={{}} onSubmit={this.onSubmit.bind(this)} />
+        <CategoryForm category={{}} articles={articles} onSubmit={this.onSubmit.bind(this)} />
       </div>
     )
   }

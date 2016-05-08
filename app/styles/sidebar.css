@@ -1,0 +1,40 @@
+.sidebarContainer {
+  @media (max-width: 500px) {
+    padding: 0 8px;
+  }
+}
+
+.categoryList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+
+  h3 {
+    border-bottom: solid 1px #114B5F;
+    font-size: 18px;
+    margin: 16px 0;
+  }
+  /*.activeCategory {
+  }*/
+
+  & > li {
+    margin: 0 0 24px;
+  }
+
+}
+
+.articleList {
+  list-style: none;
+  padding: 0;
+
+  li {
+    a {
+      color: inherit;
+      display: block;
+    }
+  }
+
+  .activeArticle {
+    text-decoration: underline;
+  }
+}

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 
+import Header, { SubHeader } from '../components/header'
 import Container from '../components/container'
 
 import LoginForm from '../forms/login'
@@ -21,7 +22,8 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header pathname={this.props.location.pathname}  />
+        <SubHeader />
         <Container>
           <h1>Login</h1>
           <p>Back to <Link to="/">top page</Link>.</p>

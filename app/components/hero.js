@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { findDOMNode } from 'react-dom'
 
-import Container from '../components/container'
-import { HardWrap } from '../components/utils'
+import Container from './container'
+import { HardWrap } from './utils'
 
 import { getText } from '../lib/localization'
 import { isOnServer } from '../utils'
@@ -20,9 +20,9 @@ class Hero extends Component {
       <div className={styles.hero}>
         <Container>
           <h2 className={styles.title}>
-            <HardWrap text={$('$hero_title')} />
+            <HardWrap text={$('$title')} />
           </h2>
-          <p className={styles.message}>{$('$hero_message')}</p>
+          <p className={styles.message}>{$('$description')}</p>
         </Container>
       </div>
     )
@@ -31,5 +31,5 @@ class Hero extends Component {
 
 
 export default connect(state => ({
-  $: getText[state.locale.code]
+  $: getText(state.locale.code)
 }))(Hero)

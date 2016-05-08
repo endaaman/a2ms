@@ -37,8 +37,8 @@ class ManageCategoryList extends Component {
                   <tr key={category._id}>
                   <td>
                     <ul>
-                      <li><code>日 : </code><Link to={path}>{category.name_ja}</Link></li>
-                      <li><code>英 : </code><Link to={path + '?en'}>{category.name_en}</Link></li>
+                      <li><code>日 : </code>{category.name_ja}</li>
+                      <li><code>英 : </code>{category.name_en}</li>
                       <li><code>URL: {path}</code></li>
                     </ul>
                   </td>

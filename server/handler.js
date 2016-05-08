@@ -12,7 +12,7 @@ import { setToken, unsetToken } from '../app/actions/token'
 import { configureHttp } from '../app/lib/http'
 
 const webpackIsomorphicTools = global.webpackIsomorphicTools
-
+const isProd = process.env.NODE_ENV === 'production'
 
 function buildHtml(head, script, content, initialState) {
   return `<!doctype html>
@@ -23,7 +23,7 @@ function buildHtml(head, script, content, initialState) {
   <body>
     <div id="app">${content}</div>
     <script>
-      window.__initial_state__ = ${JSON.stringify(initialState)}
+      window.__initial_state__ = ${JSON.stringify(initialState, null, isProd ? 0 : 2)}
     </script>
     ${script}
   </body>
@@ -68,7 +68,7 @@ export default function(req, res, onError) {
         }
 
         const html = buildHtml(heads.join('\n'), scripts.join('\n'), content, initialState)
-        const notFound = false
+        let notFound = head.meta.toString().indexOf('content="404"') > -1
         res.status(notFound ? 404 : 200).send(html)
       }
 

@@ -8,6 +8,26 @@ import {
 } from '../actions/category'
 
 
+function sort(files) {
+  files.sort((a, b)=> {
+    if (a.order < b.order) {
+      return 1
+    }
+    if (a.order > b.order) {
+      return -1
+    }
+    if (a._id < b._id) {
+      return -1
+    }
+    if (a._id > b._id) {
+      return 1
+    }
+    return 0
+  })
+  return files
+}
+
+
 
 export default (state = {
   items: [],
@@ -26,19 +46,20 @@ export default (state = {
     case DROP_CATEGORYLIST:
       return {...state, ...{
         items: [],
+        promise: null,
       }}
     case ADD_CATEGORY:
       return {...state, ...{
-        items: [...state.items, action.item]
+        items: sort([...state.items, action.item])
       }}
     case SET_CATEGORY:
       return {...state, ...{
-        items: state.items.map((item)=> {
+        items: sort(state.items.map((item)=> {
           if (item._id === action.item._id) {
             return action.item
           }
           return item
-        })
+        }))
       }}
     case DELETE_CATEGORY:
       return {...state, ...{

@@ -1,6 +1,6 @@
 import Http from '../lib/http'
 import { showLoader, hideLoader } from './loader'
-import { findItem, getApiRoot as api } from '../utils'
+import { getApiRoot as api, isPromise } from '../utils'
 
 export const START_FETCHING_ARTICLELIST = Symbol()
 export const RECIEVE_ARTICLELIST = Symbol()
@@ -43,7 +43,7 @@ export function fetchArticles() {
 export function getArticles() {
   return (dispatch, getState)=> {
     let state = getState().article
-    if (state.promise) {
+    if (isPromise(state.promise)) {
       return state.promise
     }
     if (state.items.length > 0) {

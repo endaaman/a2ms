@@ -15,6 +15,9 @@
     td, th {
       padding: 6px;
       white-space: nowrap;
+      &.breakable {
+        white-space: normal;
+      }
     }
 
     th {

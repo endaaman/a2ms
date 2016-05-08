@@ -20,20 +20,20 @@ RUN \
   rm /etc/nginx/sites-enabled/default
 
 
-ADD nginx/enda.conf /etc/nginx/sites-enabled
+ADD nginx/a2ms.conf /etc/nginx/sites-enabled
 ADD supervisor.conf /etc/supervisor/conf.d/
 
-RUN mkdir -p /var/www/enda
+RUN mkdir -p /var/www/a2ms
 
 ADD package.json /tmp/package.json
 RUN cd /tmp && NODE_ENV=development npm install
-RUN mkdir -p /var/www/enda && cp -a /tmp/node_modules /var/www/enda/
+RUN mkdir -p /var/www/a2ms && cp -a /tmp/node_modules /var/www/a2ms/
 
-ADD . /var/www/enda
-WORKDIR /var/www/enda
+ADD . /var/www/a2ms
+WORKDIR /var/www/a2ms
 RUN npm run build
 
-ADD . /var/www/enda
+ADD . /var/www/a2ms
 
 CMD ["/usr/bin/supervisord"]
 

@@ -43,6 +43,7 @@ export default (state = {
     case DROP_NEWSLIST:
       return {...state, ...{
         items: [],
+        promise: null,
       }}
     case ADD_NEWS:
       return {...state, ...{

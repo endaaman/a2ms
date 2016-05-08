@@ -60,12 +60,13 @@
   ul, ol {
     padding-left: 20px;
     li {
-      line-height: 1.5;
+      line-height: 1.428571429;
     }
   }
 
   p {
-    line-height: 1.5;
+    line-height: 1.428571429;
+    margin: 0 0 1em;
   }
 
   a {
@@ -94,6 +95,5 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
-    margin-bottom: 8px;
   }
 }

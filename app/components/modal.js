@@ -6,8 +6,6 @@ import styles from '../styles/modal.css'
 
 class _Modal extends Component {
   render() {
-    // const { isOpen, onAfterOpen, onRequestClose, style } = this.props
-    // const props = { isOpen, onAfterOpen, onRequestClose, style }
     return (
       <Modal
         {...this.props}

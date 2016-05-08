@@ -5,15 +5,17 @@ import { connect } from 'react-redux'
 import { Select } from '../../../components/controls'
 import { getArticles } from '../../../actions/article'
 import { getCategories } from '../../../actions/category'
-import { findItemById, getArticlePath, makeCategoryOptions } from '../../../utils'
+import { findItemById, getArticlePath, makeCategoryOptions, findItem } from '../../../utils'
 
 import styles from '../../../styles/table.css'
 import { listInline } from '../../../styles/utils.css'
 
 class ManageArticleList extends Component {
   static loadProps({dispatch}) {
-    return dispatch(getArticles())
-    .then(dispatch(getCategories()))
+    return Promise.all([
+      dispatch(getArticles()),
+      dispatch(getCategories()),
+    ])
   }
   componentWillMount() {
     this.constructor.loadProps(this.props)
@@ -62,8 +64,14 @@ class ManageArticleList extends Component {
 
   render() {
     const { articles, categories } = this.props
-    const filteredArticle = this.filterArticles(articles)
-    const categoryOptions = makeCategoryOptions(categories)
+    const activeCategoryIds = articles.reduce((prev, cur)=> {
+      if (cur.category) {
+        prev.push(cur.category)
+      }
+      return prev
+    }, [])
+    const activeCategories = categories.filter(c => activeCategoryIds.indexOf(c._id) > -1)
+    const categoryOptions = makeCategoryOptions(activeCategories, '未分類')
     categoryOptions.unshift({
       text: '全カテゴリ',
       value: 'all',
@@ -80,6 +88,8 @@ class ManageArticleList extends Component {
         value: 'draft',
       }
     ]
+
+    const filteredArticle = this.filterArticles(articles)
 
     return (
       <div>

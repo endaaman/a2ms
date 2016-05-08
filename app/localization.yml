@@ -1,14 +1,14 @@
 # Long string
-$hero_title:
+$title:
   ja: "医学部入試の\n妥当性を考える"
-  en: "Considering the validity of\nMedical school\nentrance examination"
+  en: "Considering the validity of \nMedical school \nentrance examination"
 
 
-$hero_message:
-  ja: 医学部入試の現状を妥当性の観点から多角的に検討し、 今後のあり方について考察する資料を提供する。
+$description:
+  ja: 現代の日本における医学部入試の妥当性を多角的に検討し、今後のあるべき姿を探る
   en: |-
     Discussing the validity of medical school entrance examinations in Japan from various perspectives
-     and sharing information which will be helpful to explore an optimal way.
+     and exploring an optimal way.
 
 
 

@@ -14,7 +14,7 @@ import Container from '../components/container'
 import { getArticles } from '../actions/article'
 import { getCategories } from '../actions/category'
 import { getNewss } from '../actions/news'
-import { getText, applyQuery } from '../lib/localization'
+import { getText, applyQuery, getField } from '../lib/localization'
 import { getMarkdownRenderers, isInnerLink } from '../utils'
 
 import styles from '../styles/home.css'
@@ -22,19 +22,32 @@ import grid from '../styles/grid.css'
 
 class CategoryPanels extends Component {
   render() {
-    const { categories } = this.props
+    const { categories, articles, locale } = this.props
+    const qq = applyQuery(locale.code)
+    const ff = getField(locale.code)
     return (
       <ul className={styles.categoryPanels}>
         {
-          categories.map(c =>(
-            <li key={c._id} className={styles.categoryPanel}>
-              <Link to={`/${c.slug}`}>
-                {/*<img src={c.image_url} />*/}
-                <h3>{c.name_ja}</h3>
-                <p>{c.desc_ja}</p>
-              </Link>
-            </li>
-          ))
+          categories.map(c => {
+            const indexArticle = articles.find(a => a.category === c._id && !a.draft)
+            if (!indexArticle) {
+              return null
+            }
+            const href = qq(`/${c.slug}/${indexArticle.slug}`)
+            return (
+              <li key={c._id} className={styles.categoryPanel}>
+                <Link to={href}>
+                  <h3>{ff(c, 'name')}</h3>
+                  {
+                    c.image_url
+                      ? <div className={ff(c, 'desc') ? styles.img : styles.imgOnly} style={{backgroundImage: `url(${c.image_url})`}} />
+                      : null
+                  }
+                  <p>{ff(c, 'desc')}</p>
+                </Link>
+              </li>
+            )
+          })
         }
       </ul>
     )
@@ -44,7 +57,7 @@ class CategoryPanels extends Component {
 class NewsList extends Component {
   render() {
     const { newss, locale: {code, ja} } = this.props
-    const qq = applyQuery[code]
+    const qq = applyQuery(code)
     return (
       <div className={styles.newsList}>
         <ul>
@@ -53,12 +66,14 @@ class NewsList extends Component {
               const message = (ja ? n.message_ja : n.message_en) || ''
               return (
                 <li key={n._id}>
-                  <div className={styles.newsDate}>{dateFormat(n.date, (ja ? 'yyyy.m.d' : 'mmmm d, yyyy'))}</div>
-                  {
-                    n.url
-                      ? <Link to={isInnerLink(n.url) ? qq(n.url) : n.url}>{message}</Link>
-                      : <span>{message}</span>
-                  }
+                  <div className={styles.newsDate}>{dateFormat(n.date, (ja ? 'yyyy m/d' : 'mmmm d, yyyy'))}</div>
+                  <div className={styles.newsMessage}>
+                    {
+                      n.url
+                        ? <Link to={isInnerLink(n.url) ? qq(n.url) : n.url}>{message}</Link>
+                        : <span>{message}</span>
+                    }
+                  </div>
                 </li>
               )
             })
@@ -73,15 +88,17 @@ class NewsList extends Component {
 
 class Home extends Component {
   static loadProps({ dispatch }) {
-    return dispatch(getArticles())
-    .then(dispatch(getCategories()))
-    .then(dispatch(getNewss()))
+    return Promise.all([
+      dispatch(getArticles()),
+      dispatch(getCategories()),
+      dispatch(getNewss()),
+    ])
   }
   componentWillMount() {
     this.constructor.loadProps(this.props)
   }
   render() {
-    const { categories, newss, locale, $ } = this.props
+    const { categories, newss, articles, locale, $ } = this.props
     return (
       <div>
         <Helmet
@@ -90,11 +107,11 @@ class Home extends Component {
         <Header pathname={this.props.location.pathname} />
         <Hero />
         <Container>
-          <h2 className={styles.heading}>{$('CATEGORIES')}</h2>
-          <CategoryPanels categories={ categories }/>
+          <h2 className={styles.heading}>TABLE OF CONTENTS</h2>
+          <CategoryPanels categories={categories} articles={articles} locale={locale} />
         </Container>
         <Container>
-          <h2 className={styles.heading}>{$('NEWS')}</h2>
+          <h2 className={styles.heading}>NEWS</h2>
           <NewsList newss={newss} locale={locale} />
         </Container>
         <Footer />
@@ -106,7 +123,8 @@ class Home extends Component {
 export default connect(state => ({
   active: !!state.session.user,
   locale: state.locale,
-  $: getText[state.locale.code],
+  $: getText(state.locale.code),
   newss: state.news.items,
+  articles: state.article.items,
   categories: state.category.items,
 }))(Home)

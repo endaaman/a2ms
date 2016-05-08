@@ -8,6 +8,7 @@ import Footer from './footer'
 import Loader from './loader'
 import Toast from './toast'
 
+import { getText } from '../lib/localization'
 import { check } from '../actions/session'
 import { setLocale } from '../actions/locale'
 import { getGoogleFontsHref } from '../utils'
@@ -21,33 +22,37 @@ class Root extends Component {
   }
   componentWillMount() {
     this.constructor.loadProps(this.props)
-
-    this.setLocale(this.props.location)
+    this.setLocale(this.props)
   }
+
   componentWillReceiveProps(nextProps) {
-    this.setLocale(nextProps.location)
+    this.setLocale(nextProps)
   }
 
-  setLocale(location) {
+  setLocale({location, locale}) {
     const query = queryString.parse(location.search)
     const code = 'en' in query
       ? 'en'
       : 'ja'
-    this.props.dispatch(setLocale(code))
+    if (locale.code !== code) {
+      this.props.dispatch(setLocale(code))
+    }
   }
 
   render() {
-    const desc = '現代の日本における医学部入試の妥当性を多角的に検討し、今後のあるべき姿を探る'
+    const { locale } = this.props
+
+    const $ = getText(locale.code)
+    const title = $('$title').replace(/\n/g, '')
+    const desc = $('$description').replace(/\n/g, '')
     return (
       <div className={styles.root}>
         <Helmet
-          titleTemplate="%s | 医学部入試の妥当性を考える"
+          titleTemplate={`%s | ${title}`}
           link={[
             {'rel': 'stylesheet', 'href': getGoogleFontsHref({
               'Ubuntu': true,
               'Ubuntu Mono': true,
-              'Oswald': true,
-              'Lato': true,
             })},
             {'rel': 'shortcut icon', 'href': require('../assets/favicon.ico')},
           ]}
@@ -67,5 +72,5 @@ class Root extends Component {
 }
 
 export default connect(state => ({
-  locale: state.locale.code
+  locale: state.locale
 }))(Root)

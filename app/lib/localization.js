@@ -1,24 +1,31 @@
 import qs from 'query-string'
 import localization from '../localization.yml'
+import { isProd } from '../utils'
+
+
 
 const regIsLongString = /^\$/
 
-export const getText = {
+function erroredString(text) {
+  return `@ERRORED_STRING: ${text} @`
+}
+
+const ListOfGetText = {
   en: text => (
     regIsLongString.test(text)
-      ? localization[text] && localization[text].en || `@ERRORED_STRING: ${text} @`
+      ? localization[text] && localization[text].en || erroredString(text)
       : text
     )
   ,
   ja: text => (
     regIsLongString.test(text)
-      ? localization[text] && localization[text].ja || `@ERRORED_STRING: ${text} @`
+      ? localization[text] && localization[text].ja || erroredString(text)
       : localization[text] || text
     )
 }
 
 
-export const applyQuery = {
+const ListOfApplyQuery = {
   en: href => {
     // force add `?en` query
     const matched = href.match( /(.*)?\?(.*)/)
@@ -59,5 +66,38 @@ export const applyQuery = {
         return href
       }
     }
+  }
+}
+
+
+export function getText(code) {
+  if (!(code in ListOfGetText)) {
+    if (!isProd()) {
+      console.warn(`Invalid code provied: `, code)
+    }
+  }
+  return ListOfGetText[code]
+}
+
+
+export function applyQuery(code) {
+  if (!(code in ListOfApplyQuery)) {
+    if (!isProd()) {
+      console.warn(`Invalid code provied: `, code)
+    }
+  }
+  return ListOfApplyQuery[code]
+}
+
+
+export function getField(code) {
+  return (item, fieldName)=> {
+    const key = fieldName + '_' + code
+    if (!isProd()) {
+      if (!(key in item)) {
+        console.warn(`Tried to get "${key}" of `, item)
+      }
+    }
+    return item[key]
   }
 }

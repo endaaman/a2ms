@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import Helmet from 'react-helmet'
 
 import { getArticles } from '../actions/article'
 import { getCategories } from '../actions/category'
-import { applyQuery } from '../lib/localization'
-import styles from '../styles/home.css'
+import { applyQuery, getField } from '../lib/localization'
+
+import styles from '../styles/sidebar.css'
 
 
 class Sidebar extends Component {
   static loadProps({ dispatch }) {
-    return dispatch(getArticles())
-    .then(dispatch(getCategories()))
+    return Promise.all([
+      dispatch(getArticles()),
+      dispatch(getCategories()),
+    ])
   }
   componentWillMount() {
     this.constructor.loadProps(this.props)
@@ -29,10 +31,11 @@ class Sidebar extends Component {
 
 
   render() {
-    const { categories, articles, ja, qq, className } = this.props
+    const { categories, articles, ja, qq, ff } = this.props
+    const { activeCategoryId, activeArticleId } = this.props
     return (
-      <div className={className}>
-        <ul>
+      <div className={styles.sidebarContainer}>
+        <ul className={styles.categoryList}>
           {
             categories.map(c =>{
               const relatedArticles = this.getRelatedArticles(c, articles)
@@ -40,12 +43,12 @@ class Sidebar extends Component {
                 ? null
                 : (
                   <li key={c._id}>
-                    <h3><Link to={qq(`/${c.slug}`)}>{ja ? c.name_ja : c.name_en}</Link></h3>
-                    <ul>
+                    <h3>{ff(c, 'name')}</h3>
+                    <ul className={styles.articleList}>
                       {
                         relatedArticles.map(a => (
-                          <li key={a._id}>
-                            <Link to={qq(`/${c.slug}/${a.slug}`)}>{ja ? a.title_ja : a.title_en}</Link>
+                          <li key={a._id} className={activeArticleId === a._id ? styles.activeArticle : null}>
+                            <Link to={qq(`/${c.slug}/${a.slug}`)}>{ff(a, 'title')}</Link>
                           </li>
                         ))
                       }
@@ -62,7 +65,8 @@ class Sidebar extends Component {
 
 export default connect(state => ({
   ja: state.locale.ja,
-  qq: applyQuery[state.locale.code],
+  qq: applyQuery(state.locale.code),
+  ff: getField(state.locale.code),
   articles: state.article.items,
   categories: state.category.items,
 }))(Sidebar)

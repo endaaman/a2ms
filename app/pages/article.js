@@ -11,45 +11,102 @@ import Header, { SubHeader } from '../components/header'
 import Container from '../components/container'
 import Footer from '../components/footer'
 import Modal from '../components/modal'
-import NotFound from '../components/not_found'
 import Sidebar from '../components/sidebar'
+import NotFound from '../components/not_found'
 
 import { getArticles } from '../actions/article'
 import { getCategories } from '../actions/category'
-import { applyQuery } from '../lib/localization'
+import { applyQuery, getField } from '../lib/localization'
 import { findItemBySlug, getMarkdownRenderers, isInnerLink } from '../utils'
 
 import styles from '../styles/article.css'
 
+class ArticleView extends Component {
+  render() {
+    const { article, locale: { ja, code }, category } = this.props
+    const qq = applyQuery(code)
+    const ff = getField(code)
+    const noTranslation = ja
+      ? !article.content_ja
+      : !article.content_en
+    const content = ja
+      ? noTranslation
+        ? article.content_en
+        : article.content_ja
+      : noTranslation
+        ? article.content_ja
+        : article.content_en
+    return (
+      <div className={cx(styles.content, {
+          [styles.contentWithSidebar]: !!article.category
+        })}>
+        <div className={styles.header}>
+          <h1>{ff(article, 'title')}</h1>
+          <div className={styles.info}>
+            <span>{dateFormat(article.created_at, ja ? 'yyyy m/d' : 'mmmm d, yyyy')}</span>
+            {
+              category._id
+                ? <span> {ff(category, 'name')}</span>
+                : null
+            }
+          </div>
+        </div>
+        <MarkdownComponent
+          source={content || ''}
+          renderers={getMarkdownRenderers({transformHref: qq})}/>
+      </div>
+    )
+  }
+}
+
 
 class Article extends Component {
   static loadProps({ dispatch, params }) {
-    return dispatch(getArticles())
-    .then(dispatch(getCategories()))
+    return Promise.all([
+      dispatch(getArticles()),
+      dispatch(getCategories()),
+    ])
   }
   componentWillMount() {
     this.constructor.loadProps(this.props)
   }
 
   render() {
-    const { article, ja, qq } = this.props
-    const title = ja ? article.title_ja : article.title_en
-    const content = ja ? article.content_ja : article.content_en
+    const { article, locale, category, not_found } = this.props
+    const title =
+      article._id
+        ? locale.ja
+          ? article.title_ja
+          : article.title_en
+        : category
+          ? locale.ja
+            ? category.name_ja
+            : category.name_en
+          : ''
+    const activeCategoryId =
+      article._id
+        ? article.category
+        : category._id
+    const activeArticleId = article._id || null
+
     return (
       <div>
         <Helmet title={title} />
         <Header pathname={this.props.location.pathname} />
         <SubHeader />
         <Container>
-          { (article.category !== null) ? <Sidebar className={styles.sidebar} /> : null}
-          <div className={cx(styles.content, {
-              [styles.contentWithSidebar]: !!article.category
-            })}>
-            <h1>{title}</h1>
-            <MarkdownComponent
-              source={content || ''}
-              renderers={getMarkdownRenderers({transformHref: qq})}/>
-          </div>
+          { (article.category)
+            ? <div className={styles.sidebar}>
+                <Sidebar activeCategoryId={activeCategoryId} activeArticleId={activeArticleId} />
+              </div>
+            : null
+          }
+          { article._id
+            ? <ArticleView article={article} category={category} locale={locale} />
+            : not_found
+              ? <NotFound />
+              : null
+          }
         </Container>
         <Footer />
       </div>
@@ -57,11 +114,15 @@ class Article extends Component {
   }
 }
 
-export default connect((state, ownProps) => ({
-  ja: state.locale.ja,
-  qq: applyQuery[state.locale.code],
-  category: ownProps.params.categorySlug === '-'
-    ? null
-    : findItemBySlug(state.category.items, ownProps.params.categorySlug, {}),
-  article: findItemBySlug(state.article.items, ownProps.params.slug, {}),
-}))(Article)
+export default connect((state, ownProps) => {
+  const article = findItemBySlug(state.article.items, ownProps.params.slug, {})
+  return {
+    locale: state.locale,
+    qq: applyQuery[state.locale.code],
+    category: ownProps.params.categorySlug === '-'
+      ? {}
+      : findItemBySlug(state.category.items, ownProps.params.categorySlug, {}),
+    article: article,
+    not_found: state.article.items.length > 0 && !article._id
+  }
+})(Article)

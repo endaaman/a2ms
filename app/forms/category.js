@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 
-import { Text, Checkbox, Editor, Button } from '../components/controls'
+import { Text, Checkbox, Editor, Button, Select } from '../components/controls'
+import { makeArticleOptions } from '../utils'
+
 
 function validate(values) {
   const errors = {}
@@ -17,7 +19,7 @@ class CategoryForm extends Component {
       slug = '',
       name_ja = '',
       name_en = '',
-      order = '',
+      order = 0,
       image_url = '',
       desc_ja = '',
       desc_en = '',
@@ -32,7 +34,7 @@ class CategoryForm extends Component {
           helpText={value =>(value && `/${value} がURLとして使用されます`)}/>
         <Text field={ name_ja } label="日本語カテゴリーの名" required={true} />
         <Text field={ name_en } label="英語のカテゴリーの名" required={true} />
-        <Text field={ order }  type="number" label="表示順序（大きいほど上に表示されます）" />
+        <Text field={ order } type="number" label="表示順序（大きいほど上に表示されます）" required={true} />
         <Text field={ image_url } label="アイキャッチに使われる画像のURL" placeholder="画像のURL" />
         <Text field={ desc_ja } label="日本語のカテゴリーの説明" />
         <Text field={ desc_en } label="英語のカテゴリーの説明" />
@@ -44,6 +46,6 @@ class CategoryForm extends Component {
 
 export default reduxForm({
   form: 'category',
-  fields: ['slug', 'name_ja', 'name_en', 'order', 'image_url', 'desc_ja', 'desc_en'],
+  fields: ['slug', 'name_ja', 'name_en', 'order', 'image_url', 'desc_ja', 'desc_en', 'index_article'],
   validate
 })(CategoryForm)

@@ -51,7 +51,7 @@ class Article extends Component {
 
 export default connect((state, ownProps) => ({
   ja: state.locale.ja,
-  qq: applyQuery[state.locale.code],
+  qq: applyQuery(state.locale.code),
   categories: state.category.items,
   category: findItemBySlug(state.category.items, ownProps.params.slug, {}),
 }))(Article)

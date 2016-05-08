@@ -1,6 +1,6 @@
 import Http from '../lib/http'
 import { showLoader, hideLoader } from './loader'
-import { getApiRoot as api } from '../utils'
+import { getApiRoot as api,　isPromise } from '../utils'
 
 export const START_FETCHING_CATEGORYLIST = Symbol()
 export const RECIEVE_CATEGORYLIST = Symbol()
@@ -30,11 +30,11 @@ export function fetchCategories() {
     }, error => {
       dispatch(hideLoader())
     })
-    dispatch(showLoader())
     dispatch({
       type: START_FETCHING_CATEGORYLIST,
       promise
     })
+    dispatch(showLoader())
     return promise
   }
 }
@@ -43,7 +43,7 @@ export function fetchCategories() {
 export function getCategories() {
   return (dispatch, getState)=> {
     let state = getState().category
-    if (state.promise) {
+    if (isPromise(state.promise)) {
       return state.promise
     }
     if (state.items.length > 0) {
@@ -76,11 +76,17 @@ function uploadCategory(id, item) {
   return (dispatch, getState)=> {
     dispatch(showLoader())
 
+    // NOTE: This transformation should be done on server side
+    const data = {...item}
+    if (data.index_article === '') {
+      data.index_article = null
+    }
+
     const updating = !!id
     return Http().request({
       method: updating ? 'PATCH' : 'POST',
       url:  updating ? `${api()}/categories/${id}` : `${api()}/categories`,
-      data: item,
+      data: data,
     }).then(res => {
       const item = res.data
       dispatch(hideLoader())

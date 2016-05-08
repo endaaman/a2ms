@@ -1,7 +1,16 @@
 a2ms:
-  build: .
-  environment:
-    VIRTUAL_HOST: a2ms.med.hokudai.ac.jp,a2ms.endaaman.me,a2ms.local
-  # extra_hosts:
-  #   - 'api.enda.local:172.17.0.1'
+  build: /var/www/a2ms
+  net: 'host'
+  ports:
+    - 80:80
+    - 443:443
+  volumes:
+    - /var/uploaded/a2ms:/var/uploaded/a2ms
+  restart: always
+
+a2ms-api:
+  build: /var/www/a2ms-api
+  net: 'host'
+  volumes:
+    - /var/uploaded/a2ms:/var/uploaded/a2ms
   restart: always

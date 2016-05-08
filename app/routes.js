@@ -1,6 +1,8 @@
 import React from 'react'
 import {  Route, IndexRoute, Redirect } from 'react-router'
 
+import { requireAuth } from './lib/auth'
+
 import Root from './components/root'
 import ManageRoot from './components/manage/root'
 
@@ -28,7 +30,7 @@ import ManageNewsEdit from './pages/manage/news/edit'
 
 
 const manage = (
-  <Route path='manage' component={ ManageRoot }>
+  <Route path='manage' component={ requireAuth(ManageRoot, NoMatch) }>
     <IndexRoute component={ ManageHome } />
     <Route path='article'>
       <IndexRoute component={ ManageArticleList } />
@@ -57,8 +59,7 @@ export default (
     <Route path='logout' component={ Logout } />
     <Route path='signup' component={ Signup } />
     <IndexRoute component={ Home } />
-    <Route path="/:slug" component={ Category } />
-    <Route path="/:categorySlug/:slug" component={ Article } />
+    <Route path=":categorySlug/:slug" component={ Article } />
     <Route path='*' component={ NoMatch } />
   </Route>
 )

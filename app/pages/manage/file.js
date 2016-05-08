@@ -17,10 +17,10 @@ import styles from '../../styles/table.css'
 
 class ManageFile extends Component {
   static loadProps({dispatch}) {
-    return dispatch(getCategories())
+    return dispatch(getFiles())
   }
   componentWillMount() {
-    return this.props.dispatch(getFiles())
+    this.constructor.loadProps(this.props)
   }
 
   constructor(props) {

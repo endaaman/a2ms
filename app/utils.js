@@ -8,14 +8,19 @@ export function uuid(a) {
     : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, uuid)
 }
 
-
-function asArray(v) {
-  return Array.isArray(v) ? v : [v]
+export function isProd() {
+  return process.env.NODE_ENV === 'production'
 }
 
 export function isOnServer() {
   return !!(typeof process === 'object' && process + '' === '[object process]')
 }
+
+
+export function isPromise(p) {
+  return !!p && (typeof p === 'object') && (p.then) && (typeof p.then === 'function')
+}
+
 
 export function keyBy(list, keyName) {
   const result = {}
@@ -24,6 +29,12 @@ export function keyBy(list, keyName) {
   })
   return result
 }
+
+
+function asArray(v) {
+  return Array.isArray(v) ? v : [v]
+}
+
 
 export function getGoogleFontsHref(fonts) {
   var family = Object.keys(fonts).map(function(name) {
@@ -37,19 +48,14 @@ export function getGoogleFontsHref(fonts) {
   return '//fonts.googleapis.com/css?family=' + family
 }
 
-export function findItem(items, path, failResult = null) {
-  const result = items.find((item)=> {
-    let found = false
-    if (path === item._id) {
-      found = true
-    }
-    if (path === item.slug) {
-      found = true
-    }
-    return found
-  })
-  return result || failResult
+
+export function findItem(items, key, path, many = false) {
+  const method = many
+    ? Array.prototype.filter
+    : Array.prototype.find
+  return method.call(items, (item)=> item[key] === path)
 }
+
 
 export function findItemById(items, path, failResult = null) {
   const result = items.find((item)=> {
@@ -74,6 +80,7 @@ export function findItemBySlug(items, path, failResult = null) {
   return result || failResult
 }
 
+
 export function getArticlePath(articleSlug, categories, categoryId) {
   if (!articleSlug) {
     return ''
@@ -86,14 +93,27 @@ export function getArticlePath(articleSlug, categories, categoryId) {
   return `/${base}/${articleSlug}`
 }
 
-export function makeCategoryOptions(items, enableNull = true) {
+
+export function makeCategoryOptions(items, nullText) {
   const options = items.map(item => ({
     value: item._id,
     text: item.name_ja,
   }))
+  if (nullText) {
+    options.unshift({value: '', text: nullText})
+  }
+  return options
+}
 
-  if (enableNull) {
-    options.unshift({value: '', text: '未分類'})
+
+export function makeArticleOptions(items, nullText) {
+  const options = items.map(item => ({
+    value: item._id,
+    text: item.title_ja,
+  }))
+
+  if (nullText) {
+    options.unshift({value: '', text:　nullText})
   }
 
   return options
@@ -149,8 +169,11 @@ export function formatByteSize(size, precision = 1) {
   return (size / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number]
 }
 
+
 export function getApiRoot() {
   return isOnServer()
-    ? 'http://localhost:3000/api'
+    ? isProd() && process.env.API_HOST
+      ? `http://${process.env.API_HOST}/api`
+      : 'http://localhost:3000/api'
     : '/api'
 }

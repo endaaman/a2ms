@@ -67,7 +67,7 @@ class ManageCategoryEdit extends Component {
     })
   }
   render() {
-    const ok = (category)=> (
+    const ok = ({ category })=> (
       <div>
         <h1>カテゴリの編集</h1>
         <p><Link to="/manage/category">一覧に戻る</Link></p>
@@ -91,7 +91,7 @@ class ManageCategoryEdit extends Component {
         { notFound
           ? <p>カテゴリが見つかりませんでした</p>
           : category
-            ? ok(category)
+            ? ok(this.props)
             : null
         }
       </div>

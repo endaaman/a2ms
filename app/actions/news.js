@@ -1,6 +1,6 @@
 import Http from '../lib/http'
 import { showLoader, hideLoader } from './loader'
-import { getApiRoot as api } from '../utils'
+import { getApiRoot as api, isPromise } from '../utils'
 
 export const START_FETCHING_NEWSLIST = Symbol()
 export const RECIEVE_NEWSLIST = Symbol()
@@ -42,7 +42,7 @@ export function fetchNewss() {
 export function getNewss() {
   return (dispatch, getState)=> {
     let state = getState().news
-    if (state.promise) {
+    if (isPromise(state.promise)) {
       return state.promise
     }
     if (state.items.length > 0) {

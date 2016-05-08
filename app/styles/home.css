@@ -13,24 +13,50 @@
   @media (min-width: 800px) {
     lost-column: 1/3;
   }
+
   a {
-    text-align: none;
     display: block;
     color: inherit;
-    border: solid 1px #6B7D7D;
-    height: 160px;
+    text-decoration: none;
+    position: relative;
     lost-utility: clearfix;
-    img {
-      display: block;
-      float: left;
-      width: 160px;
-      height: 160px;
+    &:hover {
+      opacity: 0.8;
     }
   }
+
+  h3 {
+    margin: 0;
+    font-weight: 400;
+    border-bottom: solid 2px #114B5F;
+    margin-bottom: 8px;
+    color: #114B5F;
+    font-size: 16px;
+    padding: 4px 0;
+  }
+
+  .img {
+    float: left;
+    width: 120px;
+    height: 100px;
+    margin-right: 8px;
+
+    background-size: cover;
+    background-position: center;
+  }
+
+  .imgOnly {
+    width: 100%;
+    height: 100px;
+
+    background-size: cover;
+    background-position: center;
+  }
+
 }
 
 .newsList {
-  max-height: 160px;
+  max-height: 320px;
   overflow-y: auto;
   border: solid 1px #6B7D7D;
   border-radius: 2px;
@@ -42,16 +68,19 @@
 
   li {
     margin: 0;
-    padding: 6px 0;
+    padding: 8px;
+    lost-utility: clearfix;
     &:not(:last-child) {
       border-bottom: solid 1px #6B7D7D;
     }
 
     .newsDate {
-      margin-left: 12px;
       float: left;
       width: 120px;
-      /*margin-right: 24px;*/
+      height: 100%;
+    }
+    .newsMessage {
+      margin-left: 120px;
     }
 
   }
@@ -59,9 +88,7 @@
 }
 
 .heading {
-  font-family: Lato, sans-serif;
-  font-weight: 400;
+  font-weight: normal;
   font-style: normal;
-
   color: #114B5F;
 }

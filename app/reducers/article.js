@@ -66,7 +66,7 @@ export default (state = {
 
     case ADD_ARTICLE:
       return {...state, ...{
-        items: sort([state.items, action.item])
+        items: sort([...state.items, action.item])
       }}
     case SET_ARTICLE:
       return {...state, ...{

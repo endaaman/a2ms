@@ -7,7 +7,7 @@ import styles from '../styles/loader.css'
 class Loader extends Component {
   render() {
     return this.props.loader
-      ? (<div className={styles.loader}></div>)
+      ? <div className={styles.loader}></div>
       : null
   }
 }

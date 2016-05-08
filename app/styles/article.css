@@ -1,13 +1,9 @@
 .content {
-  
-  p {
-    font-size: 14px;
-    line-height: 20px;
+  h2, h3, h4 {
+    color: #114B5F;
   }
-  li {
-    font-size: 14px;
-    line-height: 20px;
-  }
+
+
   :not(pre) > code {
     padding: 0 2px;
     margin: 0 2px;
@@ -22,9 +18,44 @@
   }
 }
 
+.header {
+  margin: 16px 0 24px;
+  h1 {
+    font-size: 36px;
+    margin: 0;
+    color: #333;
+
+    text-align: center;
+  }
+
+
+  .info {
+    margin: 8px 0;
+    font-size: 16px;
+    color: #6B7D7D;
+    text-align: center;
+    line-height: 16px;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    margin: 16px auto;
+    width: 240px;
+    height: 2px;
+    background-color:  #CE2D4F;
+  }
+
+}
+
 
 .sidebar {
-  padding: 0 8px;
+  /*background-color: red;*/
+  @media (max-width: 500px) {
+    margin: 0 -8px;
+    border-bottom: solid 1px #114B5F;
+  }
+
   @media (min-width: 500px) and (max-width: 800px) {
     lost-column: 1/3;
   }

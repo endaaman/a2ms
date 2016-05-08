@@ -35,7 +35,7 @@ class ManageNewsList extends Component {
               newss.map(news => {
                 return(
                   <tr key={news._id}>
-                    <td>
+                    <td className={styles.breakable}>
                       <ul>
                         <li><code>日: </code>{news.message_ja}</li>
                         <li><code>英: </code>{news.message_en}</li>
