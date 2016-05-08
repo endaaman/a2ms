@@ -13,7 +13,7 @@ export function requireAuth(Target, Replacer, level = 'user') {
       this.constructor.loadProps(this.props)
     }
     componentWillReceiveProps (nextProps) {
-      this.constructor.loadProps(this.props)
+      this.constructor.loadProps(nextProps)
     }
 
     render () {
