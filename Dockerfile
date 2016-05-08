@@ -13,7 +13,6 @@ ENV PATH /root/.nodebrew/current/bin:$PATH
 RUN nodebrew install-binary v4.4.3
 RUN nodebrew use v4.4.3
 
-RUN mkdir -p /tmp/nginx/cache/thumb
 RUN \
   chown -R www-data:www-data /var/lib/nginx && \
   echo "\ndaemon off;" >> /etc/nginx/nginx.conf && \
