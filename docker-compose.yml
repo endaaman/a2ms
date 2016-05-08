@@ -1,16 +1,9 @@
 a2ms:
-  build: /var/www/a2ms
+  build: .
   net: 'host'
   ports:
     - 80:80
     - 443:443
-  volumes:
-    - /var/uploaded/a2ms:/var/uploaded/a2ms
-  restart: always
-
-a2ms-api:
-  build: /var/www/a2ms-api
-  net: 'host'
   volumes:
     - /var/uploaded/a2ms:/var/uploaded/a2ms
   restart: always
