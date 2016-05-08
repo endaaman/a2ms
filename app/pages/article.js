@@ -70,6 +70,9 @@ class Article extends Component {
   componentWillMount() {
     this.constructor.loadProps(this.props)
   }
+  componentWillReceiveProps (nextProps) {
+    this.constructor.loadProps(nextProps)
+  }
 
   render() {
     const { article, locale, category, not_found } = this.props
