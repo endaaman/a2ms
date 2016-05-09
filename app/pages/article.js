@@ -16,16 +16,17 @@ import NotFound from '../components/not_found'
 
 import { getArticles } from '../actions/article'
 import { getCategories } from '../actions/category'
-import { applyQuery, getField } from '../lib/localization'
+import { applyQuery, getField, getText } from '../lib/localization'
 import { findItemBySlug, getMarkdownRenderers, isInnerLink } from '../utils'
 
 import styles from '../styles/article.css'
 
 class ArticleView extends Component {
   render() {
-    const { article, locale: { ja, code }, category } = this.props
+    const { article, locale: { ja, code }, category, active } = this.props
     const qq = applyQuery(code)
     const ff = getField(code)
+    const $ = getText(code)
     const noTranslation = ja
       ? !article.content_ja
       : !article.content_en
@@ -49,8 +50,17 @@ class ArticleView extends Component {
                 ? <span> {ff(category, 'name')}</span>
                 : null
             }
+            {
+              active
+                ? <span> <Link to={`/manage/article/${article._id}`}>編集</Link></span>
+                : null
+            }
           </div>
         </div>
+        { noTranslation
+            ? <div className={styles.noTranslation}>{$('$no_translation')}</div>
+            : null
+        }
         <MarkdownComponent
           source={content || ''}
           renderers={getMarkdownRenderers({transformHref: qq})}/>
@@ -105,7 +115,7 @@ class Article extends Component {
             : null
           }
           { article._id
-            ? <ArticleView article={article} category={category} locale={locale} />
+            ? <ArticleView {...this.props} />
             : not_found
               ? <NotFound />
               : null
@@ -120,6 +130,7 @@ class Article extends Component {
 export default connect((state, ownProps) => {
   const article = findItemBySlug(state.article.items, ownProps.params.slug, {})
   return {
+    active: !!state.session.user,
     locale: state.locale,
     qq: applyQuery[state.locale.code],
     category: ownProps.params.categorySlug === '-'
