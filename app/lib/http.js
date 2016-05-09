@@ -12,6 +12,7 @@ export function configureHttp(getState) {
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`
     }
+    config.headers['If-Modified-Since'] = '0'
     return config
   }, error => {
     return Promise.reject(error)
