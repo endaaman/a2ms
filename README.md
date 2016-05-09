@@ -1,14 +1,11 @@
 [a2ms.med.hokudai.ac.jp](http://a2ms.med.hokudai.ac.jp)
 
-## NOTE
-SSR時は`API_HOST`からAPIへアクセスするので`--add-host <api container name>:API_HOST`とする
-
 ## TODO
 
-### Hi
+### High
 - article design
 - sidebar design/collapse
-- place button to copy to paste board
+- place button to copy to clipboard
 
 ### Low
 - test
