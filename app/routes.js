@@ -8,7 +8,6 @@ import ManageRoot from './components/manage/root'
 
 import Home from './pages/home'
 import Article from './pages/article'
-import Category from './pages/category'
 
 import Login from './pages/login'
 import Logout from './pages/logout'
