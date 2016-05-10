@@ -17,7 +17,7 @@ class Header extends Component {
       <div className={styles.header}>
         <Container>
           <Link to={ja ? '/' : '/?en'} className={styles.logo}>
-            <img src={require('../assets/logo.svg')} />
+            <img src={require('../assets/logo.png')} />
             <h1>A2MS</h1>
             <div className={styles.logoText}>Admission to Medical School</div>
           </Link>
