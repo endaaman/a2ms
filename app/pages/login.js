@@ -7,6 +7,7 @@ import Container from '../components/container'
 
 import LoginForm from '../forms/login'
 import { login } from '../actions/session'
+import { showToast } from '../actions/toast'
 
 
 class Login extends Component {
@@ -15,8 +16,10 @@ class Login extends Component {
   }
 
   onSubmit(data) {
-    this.props.dispatch(login(data)).then(()=> {
+    const { dispatch } = this.props
+    dispatch(login(data)).then(()=> {
       this.context.router.push('/')
+      dispatch(showToast('ログインしました'))
     })
   }
   render() {

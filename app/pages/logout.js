@@ -7,6 +7,7 @@ import Header from '../components/header'
 import Footer from '../components/footer'
 import { Button } from '../components/controls'
 
+import { showToast } from '../actions/toast'
 import { logout } from '../actions/session'
 
 class Logout extends Component {
@@ -15,8 +16,10 @@ class Logout extends Component {
   }
 
   logout() {
-    this.props.dispatch(logout())
+    const { dispatch } = this.props
+    dispatch(logout())
     this.context.router.push('/')
+    dispatch(showToast('ログアウトしました'))
   }
   render() {
     return (
