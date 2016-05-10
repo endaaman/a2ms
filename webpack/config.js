@@ -68,7 +68,9 @@ module.exports = (function(){
         addDependencyTo: webpack
       }),
       require('lost'),
-      require('autoprefixer'),
+      require('autoprefixer')({
+        browsers: ['last 3 versions'] 
+      }),
     ]
   }
 
