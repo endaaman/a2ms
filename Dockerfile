@@ -32,8 +32,6 @@ ADD . /var/www/a2ms
 WORKDIR /var/www/a2ms
 RUN npm run build
 
-ADD . /var/www/a2ms
-
 CMD ["/usr/bin/supervisord"]
 
 EXPOSE 80
