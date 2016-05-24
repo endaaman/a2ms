@@ -20,6 +20,8 @@ class Login extends Component {
     dispatch(login(data)).then(()=> {
       this.context.router.push('/')
       dispatch(showToast('ログインしました'))
+    }, ()=> {
+      dispatch(showToast('ログインに失敗しました'))
     })
   }
   render() {
