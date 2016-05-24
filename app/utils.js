@@ -172,8 +172,6 @@ export function formatByteSize(size, precision = 1) {
 
 export function getApiRoot() {
   return isOnServer()
-    ? isProd() && process.env.API_HOST
-      ? `http://${process.env.API_HOST}/api`
-      : 'http://localhost:3000/api'
+    ? 'http://localhost:3000/api'
     : '/api'
 }
