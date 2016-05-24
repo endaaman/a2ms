@@ -6,4 +6,5 @@ a2ms:
     - 443:443
   volumes:
     - /var/uploaded/a2ms:/var/uploaded/a2ms
+    - /etc/certs:/etc/certs:ro
   restart: always
