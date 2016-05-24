@@ -6,7 +6,7 @@ export const UNSET_TOKEN = Symbol()
 
 export function setToken(token) {
   if (!isOnServer()) {
-    cookies.set('token', token)
+    cookies.set('token', token, { expires: 365 })
   }
   return {
     type: SET_TOKEN,
