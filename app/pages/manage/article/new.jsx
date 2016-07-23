@@ -18,14 +18,34 @@ class ManageArticleNew extends Component {
   static loadProps({dispatch, params}) {
     return dispatch(getCategories())
   }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      performingChange: false
+    }
+  }
+
   componentWillMount() {
     this.constructor.loadProps(this.props)
+    this.context.router.setRouteLeaveHook(this.props.route, (nextLocation)=> {
+      if (!this.state.performingChange) {
+        return 'Are you sure to leave this page'
+      }
+    })
+  }
+
+  performChange() {
+    this.setState({
+      performingChange: true
+    })
   }
 
   onSubmit(data) {
     const { dispatch, article } = this.props
     dispatch(createArticle(data))
     .then((newArticle)=> {
+      this.performChange()
       dispatch(showToast('正常に保存されました'))
       this.context.router.push(`/manage/article`)
     }, err => {

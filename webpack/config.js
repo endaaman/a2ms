@@ -62,6 +62,10 @@ module.exports = (function(){
     ]
   }
 
+  config.resolve = {
+    extensions: ['', '.js', '.json', '.jsx']
+  }
+
   config.postcss = function() {
     return [
       require('precss')({
@@ -69,7 +73,7 @@ module.exports = (function(){
       }),
       require('lost'),
       require('autoprefixer')({
-        browsers: ['last 3 versions'] 
+        browsers: ['last 3 versions']
       }),
     ]
   }

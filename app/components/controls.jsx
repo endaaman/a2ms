@@ -1,8 +1,21 @@
 import React, { Component } from 'react'
+import _pick from 'lodash/pick'
 import Textarea from 'react-textarea-autosize'
 import { uuid } from '../utils'
 import styles from '../styles/controls.css'
 
+const inputProps = [
+  'placeholder',
+  'type',
+  'value',
+  'onBlur',
+  'onChange',
+  'onFocus',
+]
+
+function transformField(field) {
+  return _pick(field, inputProps)
+}
 
 export class Text extends Component {
   constructor(...props) {
@@ -17,8 +30,11 @@ export class Text extends Component {
     })
   }
   render() {
-    const { field, label, type, helpText, required, pattern } = this.props
+    const { label, type, helpText, required, pattern } = this.props
     const { id } = this.state
+
+    const field = transformField(this.props.field)
+
     return (
       <div className={styles.text}>
         <input
@@ -31,7 +47,7 @@ export class Text extends Component {
           pattern={pattern || null}
           className={(label && field.value || field.value === 0) ? styles.filled : null}
           placeholder={label ? '' : this.props.placeholder}
-          {...this.props.field} />
+          {...field} />
         { id ? <label htmlFor={id}>{label}</label> : null}
         { required ? <div className={styles.required}>必須</div> : null}
         <div className={styles.helpText}>{
@@ -69,8 +85,9 @@ export class Checkbox extends Component {
     })
   }
   render() {
-    const { field, label } = this.props
+    const { label } = this.props
     const { id } = this.state
+    const field = transformField(this.props.field)
     return (
       <div className={styles.checkbox}>
         <input
@@ -86,7 +103,8 @@ export class Checkbox extends Component {
 
 export class Select extends Component {
   render() {
-    const { field, options } = this.props
+    const { options } = this.props
+    const field = transformField(this.props.field)
     return (
       <div className={styles.select}>
         <select {...field} value={field.value || ''}>
@@ -106,7 +124,7 @@ export class Select extends Component {
 
 export class Editor extends Component {
   render() {
-    const { field } = this.props
+    const field = transformField(this.props.field)
     return (
       <div className={styles.editor}>
         <Textarea

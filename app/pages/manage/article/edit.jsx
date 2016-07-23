@@ -16,20 +16,35 @@ class ManageArticleEdit extends Component {
   static contextTypes = {
     router: React.PropTypes.object.isRequired
   }
+
   static loadProps({dispatch, params}) {
     return Promise.all([
       dispatch(getArticles()),
       dispatch(getCategories()),
     ])
   }
+
   componentWillMount() {
     this.constructor.loadProps(this.props)
+    this.context.router.setRouteLeaveHook(this.props.route, (nextLocation)=> {
+      if (!this.state.performingChange) {
+        return 'Are you sure to leave this page'
+      }
+    })
   }
+
   constructor(props) {
     super(props)
     this.state = {
-      modalIsOpen: false
+      modalIsOpen: false,
+      performingChange: false
     }
+  }
+
+  performChange() {
+    this.setState({
+      performingChange: true
+    })
   }
 
   openModal(e) {
@@ -51,8 +66,10 @@ class ManageArticleEdit extends Component {
   deleteArticle() {
     const { dispatch, article } = this.props
     const articleName = article.name_ja
+
     dispatch(deleteArticle(article._id))
     .then(()=> {
+      this.performChange()
       dispatch(showToast(`deleted "${articleName}"`))
       this.context.router.push('/manage/article')
     }, err => {
@@ -62,8 +79,10 @@ class ManageArticleEdit extends Component {
 
   onSubmit(data) {
     const { dispatch, article } = this.props
+
     dispatch(updateArticle(article._id, data))
     .then((newArticle)=> {
+      this.performChange()
       dispatch(showToast('正常に保存されました'))
       this.context.router.push(`/manage/article`)
     }, err => {
