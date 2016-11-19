@@ -72,7 +72,7 @@ class Footer extends Component {
                   <li><Link to={qq(`/`)}>{$('TOP')}</Link></li>
                   {
                     articles.map(a => (
-                      <li key={a._id}><Link to={qq(`/-/${a.slug}`)}>{ja ? a.title_ja : a.title_en}</Link></li>
+                      <li key={a.id}><Link to={qq(`/-/${a.slug}`)}>{ja ? a.title_ja : a.title_en}</Link></li>
                     ))
                   }
                 </ul>
@@ -126,7 +126,7 @@ class Footer extends Component {
 export default connect((state, ownProps)=> {
   return {
     active: !!state.session.user,
-    articles: state.article.items.filter(a => !a.category && !a.draft),
+    articles: state.article.items.filter(a => !a.category_id && !a.draft),
     ja: state.locale.ja,
     qq: applyQuery(state.locale.code),
     $: getText(state.locale.code),

@@ -34,7 +34,7 @@ class ManageCategoryList extends Component {
               categories.map(category => {
                 const path = `/${category.slug}`
                 return(
-                  <tr key={category._id}>
+                  <tr key={category.id}>
                   <td>
                     <ul>
                       <li><code>日 : </code>{category.name_ja}</li>
@@ -44,7 +44,7 @@ class ManageCategoryList extends Component {
                   </td>
                     <td className={styles.center}>{category.order}</td>
                     <td className={styles.center}>
-                      <Link to={`/manage/category/${category._id}`}>編集</Link>
+                      <Link to={`/manage/category/${category.id}`}>編集</Link>
                     </td>
                   </tr>
                 )

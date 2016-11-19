@@ -52,7 +52,7 @@ export default (state = {
     case SET_NEWS:
       return {...state, ...{
         items: sortByDate(state.items.map((item)=> {
-          if (item._id === action.item._id) {
+          if (item.id === action.item.id) {
             return action.item
           }
           return item
@@ -60,7 +60,7 @@ export default (state = {
       }}
     case DELETE_NEWS:
       return {...state, ...{
-        items: state.items.filter((item)=> item._id !== action.id )
+        items: state.items.filter((item)=> item.id !== action.id )
       }}
 
     default:

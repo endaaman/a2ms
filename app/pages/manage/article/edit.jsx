@@ -67,7 +67,7 @@ class ManageArticleEdit extends Component {
     const { dispatch, article } = this.props
     const articleName = article.name_ja
 
-    dispatch(deleteArticle(article._id))
+    dispatch(deleteArticle(article.id))
     .then(()=> {
       this.performChange()
       dispatch(showToast(`deleted "${articleName}"`))
@@ -80,7 +80,7 @@ class ManageArticleEdit extends Component {
   onSubmit(data) {
     const { dispatch, article } = this.props
 
-    dispatch(updateArticle(article._id, data))
+    dispatch(updateArticle(article.id, data))
     .then((newArticle)=> {
       this.performChange()
       dispatch(showToast('正常に保存されました'))
@@ -112,7 +112,7 @@ class ManageArticleEdit extends Component {
 
     return (
       <div>
-        { article._id
+        { article.id
           ? ok(this.props)
           : this.props
             ? <p>記事が見つかりませんでした</p>

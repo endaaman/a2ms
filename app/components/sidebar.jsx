@@ -22,17 +22,18 @@ class Sidebar extends Component {
 
 
   getRelatedArticles(category, articles) {
-    if (!category._id) {
+    if (!category.id) {
       return []
     }
-    const aa = articles.filter(a => a.category === category._id)
+    const aa = articles.filter(a => a.category_id === category.id)
     return aa
   }
 
 
   render() {
     const { categories, articles, ja, qq, ff } = this.props
-    const { activeCategoryId, activeArticleId } = this.props
+    const { activeArticleId } = this.props
+    console.log(activeArticleId)
     return (
       <div className={styles.sidebarContainer}>
         <ul className={styles.categoryList}>
@@ -42,12 +43,12 @@ class Sidebar extends Component {
               return relatedArticles.length < 1
                 ? null
                 : (
-                  <li key={c._id}>
+                  <li key={c.id}>
                     <h3>{ff(c, 'name')}</h3>
                     <ul className={styles.articleList}>
                       {
                         relatedArticles.map(a => (
-                          <li key={a._id} className={activeArticleId === a._id ? styles.activeArticle : null}>
+                          <li key={a.id} className={activeArticleId === a.id ? styles.activeArticle : null}>
                             <Link to={qq(`/${c.slug}/${a.slug}`)}>{ff(a, 'title')}</Link>
                           </li>
                         ))

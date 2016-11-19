@@ -34,7 +34,7 @@ class ManageNewsList extends Component {
             {
               newss.map(news => {
                 return(
-                  <tr key={news._id}>
+                  <tr key={news.id}>
                     <td className={styles.breakable}>
                       <ul>
                         <li><code>日: </code>{news.message_ja}</li>
@@ -43,7 +43,7 @@ class ManageNewsList extends Component {
                     </td>
                     <td>{dateFormat(news.date, 'yyyy年mm月dd日')}</td>
                     <td className={styles.center}>
-                      <Link to={`/manage/news/${news._id}`}>編集</Link>
+                      <Link to={`/manage/news/${news.id}`}>編集</Link>
                     </td>
                   </tr>
                 )

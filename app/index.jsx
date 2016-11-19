@@ -1,26 +1,23 @@
 import './polyfill'
-import cookies from 'browser-cookies'
 import React from 'react'
 import { render } from 'react-dom'
-import { Router, match, browserHistory } from 'react-router'
-import createBrowserHistory from 'history/lib/createBrowserHistory'
+import { Router, match, browserHistory, applyRouterMiddleware } from 'react-router'
+import { useScroll } from 'react-router-scroll';
 import { Provider } from 'react-redux'
-import withScroll from 'scroll-behavior'
-
+import cookies from 'browser-cookies'
 
 import routes from './routes'
 import configureStore from './store/configure'
 import reducer from './reducers/combined'
 
-import { configureHttp } from './lib/http'
 import { setToken } from './actions/token'
 import { setLocale } from './actions/locale'
+import { configureHttp } from './lib/http'
 
 import './styles/global.css'
 
 const rootDom = document.getElementById('app')
 const initialState = window.__initial_state__ || {}
-const history = withScroll(browserHistory)
 const store = configureStore(initialState, history)
 
 
@@ -29,6 +26,8 @@ const token = cookies.get('token')
 if (token) {
   store.dispatch(setToken(token))
 }
+
+// auto language detection
 // if (!store.getState().locale) {
 //   const code = navigator.languages
 //     ? navigator.languages[0]
@@ -37,7 +36,11 @@ if (token) {
 // }
 
 
-match({ routes, history }, (error, redirectLocation, renderProps) => {
+match({
+  routes,
+  history: browserHistory,
+}, (error, redirectLocation, renderProps) => {
+  renderProps.render = applyRouterMiddleware(useScroll())
   render((
     <Provider store={store}>
       <Router {...renderProps} />

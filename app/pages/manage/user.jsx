@@ -19,7 +19,7 @@ class ManageUser extends Component {
     e.preventDefault()
 
     if(window.confirm(`Are you sure to approve ${user.username}`)){
-      this.props.dispatch(approveUser(user._id))
+      this.props.dispatch(approveUser(user.id))
     }
   }
   rejectUser(user, e) {
@@ -27,7 +27,7 @@ class ManageUser extends Component {
     e.preventDefault()
 
     if(window.confirm(`Are you sure to reject ${user.username}`)){
-      this.props.dispatch(rejectUser(user._id))
+      this.props.dispatch(rejectUser(user.id))
     }
   }
   deleteUser(user, e) {
@@ -35,7 +35,7 @@ class ManageUser extends Component {
     e.preventDefault()
 
     if(window.confirm(`Are you sure to delete ${user.username}`)){
-      this.props.dispatch(deleteUser(user._id))
+      this.props.dispatch(deleteUser(user.id))
     }
   }
 
@@ -58,7 +58,7 @@ class ManageUser extends Component {
             {
               users.map(user => {
                 return(
-                  <tr key={user._id}>
+                  <tr key={user.id}>
                     <td>{user.username}</td>
                     <td className={styles.center}>
                       {
@@ -69,7 +69,7 @@ class ManageUser extends Component {
                     </td>
                     <td className={styles.center}>
                       {
-                        profile._id == user._id
+                        profile.id == user.id
                           ? <span>n/a</span>
                           : user.approved
                             ? <a href="#" onClick={this.rejectUser.bind(this, user)}>reject</a>
@@ -78,7 +78,7 @@ class ManageUser extends Component {
                     </td>
                     <td className={styles.center} onClick={this.deleteUser.bind(this, user)}>
                       {
-                        profile._id == user._id
+                        profile.id == user.id
                           ? <span>n/a</span>
                           : <a href="#">delete</a>
                       }

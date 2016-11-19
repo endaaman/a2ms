@@ -47,7 +47,7 @@ class ManageNewsEdit extends Component {
 
   deleteNews() {
     const { dispatch, news } = this.props
-    dispatch(deleteNews(news._id))
+    dispatch(deleteNews(news.id))
     .then(()=> {
       dispatch(showToast(`deleted`))
       this.context.router.push('/manage/news')
@@ -58,7 +58,7 @@ class ManageNewsEdit extends Component {
 
   onSubmit(data) {
     const { dispatch, news } = this.props
-    dispatch(updateNews(news._id, data))
+    dispatch(updateNews(news.id, data))
     .then((newNews)=> {
       dispatch(showToast('正常に保存されました'))
       this.context.router.push(`/manage/news`)

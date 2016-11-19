@@ -1,18 +1,23 @@
-var express = require('express')
-var cookieParser = require('cookie-parser')
-var WebpackIsomorphicTools = require('webpack-isomorphic-tools')
+const express = require('express')
+const proxy = require('http-proxy');
+const cookieParser = require('cookie-parser')
+const WebpackIsomorphicTools = require('webpack-isomorphic-tools')
 
-var port = parseInt(process.argv[2]) || 8080
-var project_base_path = require('path').resolve(__dirname, '..')
-var server = express()
+const port = parseInt(process.argv[2]) || 8080
+const project_base_path = require('path').resolve(__dirname, '..')
+const server = express()
 
+if (process.env.API_HOST) {
+  proxy.createProxyServer({
+    target:`http://${process.env.API_HOST}:3000`
+  }).listen(3000)
+}
 
 global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../webpack/isomorphic-tools'))
 .server(project_base_path, function(){
 
   server.use(cookieParser())
-  // This handled is called cuz nginx serves forward
-  server.use(express.static('build'))
+  server.use(express.static('dist'))
 
   server.use('*', function(req, res) {
     global.__HOSTNAME__ = req.hostname

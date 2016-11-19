@@ -70,11 +70,11 @@ export default (state = {
       }}
     case SET_ARTICLE:
       return {...state, ...{
-        items: sort(state.items.map(item => item._id === action.item._id ? action.item : item))
+        items: sort(state.items.map(item => item.id === action.item.id ? action.item : item))
       }}
     case DELETE_ARTICLE:
       return {...state, ...{
-        items: state.items.filter(item => item._id !== action.id )
+        items: state.items.filter(item => item.id !== action.id )
       }}
 
     default:

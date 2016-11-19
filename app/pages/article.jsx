@@ -39,20 +39,20 @@ class ArticleView extends Component {
         : article.content_en
     return (
       <div className={cx(styles.content, {
-          [styles.contentWithSidebar]: !!article.category
+          [styles.contentWithSidebar]: !!article.category_id
         })}>
         <div className={styles.header}>
           <h1>{ff(article, 'title')}</h1>
           <div className={styles.info}>
             <span>{dateFormat(article.created_at, ja ? 'yyyy m/d' : 'mmmm d, yyyy')}</span>
             {
-              category._id
+              category.id
                 ? <span> {ff(category, 'name')}</span>
                 : null
             }
             {
               active
-                ? <span> <Link to={`/manage/article/${article._id}`}>編集</Link></span>
+                ? <span> <Link to={`/manage/article/${article.id}`}>編集</Link></span>
                 : null
             }
           </div>
@@ -87,7 +87,7 @@ class Article extends Component {
   render() {
     const { article, locale, category, not_found } = this.props
     const title =
-      article._id
+      article.id
         ? locale.ja
           ? article.title_ja
           : article.title_en
@@ -97,10 +97,10 @@ class Article extends Component {
             : category.name_en
           : ''
     const activeCategoryId =
-      article._id
-        ? article.category
-        : category._id
-    const activeArticleId = article._id || null
+      article.id
+        ? article.category_id
+        : category.id
+    const activeArticleId = article.id || null
 
     return (
       <div>
@@ -108,17 +108,19 @@ class Article extends Component {
         <Header pathname={this.props.location.pathname} />
         <SubHeader />
         <Container>
-          { (article.category)
-            ? <div className={styles.sidebar}>
+          {
+            article.category_id
+              ? <div className={styles.sidebar}>
                 <Sidebar activeCategoryId={activeCategoryId} activeArticleId={activeArticleId} />
               </div>
-            : null
-          }
-          { article._id
-            ? <ArticleView {...this.props} />
-            : not_found
-              ? <NotFound />
               : null
+          }
+          {
+            article.id
+              ? <ArticleView {...this.props} />
+              : not_found
+                ? <NotFound />
+                : null
           }
         </Container>
         <Footer />
@@ -137,6 +139,6 @@ export default connect((state, ownProps) => {
       ? {}
       : findItemBySlug(state.category.items, ownProps.params.categorySlug, {}),
     article: article,
-    not_found: state.article.items.length > 0 && !article._id
+    not_found: state.article.items.length > 0 && !article.id
   }
 })(Article)

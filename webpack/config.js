@@ -5,7 +5,6 @@ const fs = require('fs')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 
-
 const Webpack_isomorphic_tools_plugin =
   require('webpack-isomorphic-tools/plugin')
 const webpack_isomorphic_tools_configuration =
@@ -55,8 +54,8 @@ module.exports = (function(){
       }, {
         test: /.jsx?$/,
         loader: 'babel-loader',
-        exclude: /^(?=.*node_modules)((?!endaaman).)*$/,
-        // exclude: /node_modules/,
+        // exclude: /^(?=.*node_modules)((?!endaaman).)*$/,
+        exclude: /node_modules/,
         query: babelrc
       }
     ]
@@ -80,12 +79,12 @@ module.exports = (function(){
 
 
   config.entry = {
-    app: ['./app/index.js']
+    app: ['./app/index.jsx']
   }
 
 
   config.output = {
-    path: path.join(__dirname, '..', 'build'),
+    path: path.join(__dirname, '..', production ? 'dist' : 'build'),
     publicPath: '/',
     filename:  `${fileName}.js`,
   }

@@ -47,7 +47,7 @@ class ManageCategoryEdit extends Component {
 
   deleteCategory() {
     const { dispatch, category } = this.props
-    dispatch(deleteCategory(category._id))
+    dispatch(deleteCategory(category.id))
     .then(()=> {
       dispatch(showToast(`deleted "${category.name_ja}"`))
       this.context.router.push('/manage/category')
@@ -58,7 +58,7 @@ class ManageCategoryEdit extends Component {
 
   onSubmit(data) {
     const { dispatch, category } = this.props
-    dispatch(updateCategory(category._id, data))
+    dispatch(updateCategory(category.id, data))
     .then((newCategory)=> {
       dispatch(showToast('正常に保存されました'))
       this.context.router.push(`/manage/category`)

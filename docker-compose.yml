@@ -1,10 +1,11 @@
 a2ms:
-  build: .
-  net: 'host'
-  ports:
-    - 80:80
-    - 443:443
+  container_name: a2ms
+  image: endaaman/a2ms
+  environment:
+    VIRTUAL_HOST: a2ms.med.hokudai.ac.jp,a2ms.dev
+    API_HOST: a2ms-api
+  external_links:
+   - a2ms-api
   volumes:
-    - /var/uploaded/a2ms:/var/uploaded/a2ms
-    - /etc/certs:/etc/certs:ro
-  restart: always
+    - /var/shared/a2ms:/var/shared/a2ms
+

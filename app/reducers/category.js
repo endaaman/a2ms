@@ -16,10 +16,10 @@ function sort(files) {
     if (a.order > b.order) {
       return -1
     }
-    if (a._id < b._id) {
+    if (a.id < b.id) {
       return -1
     }
-    if (a._id > b._id) {
+    if (a.id > b.id) {
       return 1
     }
     return 0
@@ -55,7 +55,7 @@ export default (state = {
     case SET_CATEGORY:
       return {...state, ...{
         items: sort(state.items.map((item)=> {
-          if (item._id === action.item._id) {
+          if (item.id === action.item.id) {
             return action.item
           }
           return item
@@ -63,7 +63,7 @@ export default (state = {
       }}
     case DELETE_CATEGORY:
       return {...state, ...{
-        items: state.items.filter((item)=> item._id !== action.id )
+        items: state.items.filter((item)=> item.id !== action.id )
       }}
 
     default:

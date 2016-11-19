@@ -34,8 +34,8 @@ class ManageArticleList extends Component {
       let ok = true
       if (this.state.categoryFilter !== 'all') {
         ok = this.state.categoryFilter === ''
-          ? !a.category
-          : a.category === this.state.categoryFilter
+          ? !a.category_id
+          : '' + a.category_id === this.state.categoryFilter // filter is string
       }
       if (!ok) {
         return false
@@ -65,12 +65,12 @@ class ManageArticleList extends Component {
   render() {
     const { articles, categories } = this.props
     const activeCategoryIds = articles.reduce((prev, cur)=> {
-      if (cur.category) {
-        prev.push(cur.category)
+      if (cur.category_id) {
+        prev.push(cur.category_id)
       }
       return prev
     }, [])
-    const activeCategories = categories.filter(c => activeCategoryIds.indexOf(c._id) > -1)
+    const activeCategories = categories.filter(c => activeCategoryIds.indexOf(c.id) > -1)
     const categoryOptions = makeCategoryOptions(activeCategories, '未分類')
     categoryOptions.unshift({
       text: '全カテゴリ',
@@ -123,11 +123,11 @@ class ManageArticleList extends Component {
               filteredArticle.map(article => {
                 let category = null
                 if (categories.length > 0) {
-                  category = findItemById(categories, article.category) || category
+                  category = findItemById(categories, article.category_id) || category
                 }
                 const path = `/${ category ? category.slug : '-'}/${article.slug}`
                 return(
-                  <tr key={article._id}>
+                  <tr key={article.id}>
                     <td>
                       <ul>
                         <li><code>日 : </code><Link to={path}>{article.title_ja}</Link></li>
@@ -136,7 +136,7 @@ class ManageArticleList extends Component {
                       </ul>
                     </td>
                     { category
-                      ? <td><Link to={`/manage/category/${category._id}`}>{category.name_ja}</Link></td>
+                      ? <td><Link to={`/manage/category/${category.id}`}>{category.name_ja}</Link></td>
                       : <td>未分類</td>
                     }
                     <td className={styles.center}>{article.order}</td>
@@ -144,7 +144,7 @@ class ManageArticleList extends Component {
                       { article.draft ? '下書き' : '公開' }
                     </td>
                     <td className={styles.center}>
-                      <Link to={`/manage/article/${article._id}`}>編集</Link>
+                      <Link to={`/manage/article/${article.id}`}>編集</Link>
                     </td>
                   </tr>
                 )

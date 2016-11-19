@@ -93,6 +93,7 @@ export class Checkbox extends Component {
         <input
           id={this.state.id}
           type="checkbox"
+          checked={!!field.value}
           {...field} />
         <label htmlFor={this.state.id}>{label}</label>
       </div>

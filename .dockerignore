@@ -1,6 +1,10 @@
-build
-node_modules
+,
+.git
+
+node_modules/
 npm-debug.log
 
+build/
+dist/
 webpack-stats.json
 webpack-assets.json

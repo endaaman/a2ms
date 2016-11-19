@@ -60,7 +60,7 @@ export function findItem(items, key, path, many = false) {
 export function findItemById(items, path, failResult = null) {
   const result = items.find((item)=> {
     let found = false
-    if (path === item._id) {
+    if (path == '' + item.id) {
       found = true
     }
     return found
@@ -96,7 +96,7 @@ export function getArticlePath(articleSlug, categories, categoryId) {
 
 export function makeCategoryOptions(items, nullText) {
   const options = items.map(item => ({
-    value: item._id,
+    value: item.id,
     text: item.name_ja,
   }))
   if (nullText) {
@@ -108,7 +108,7 @@ export function makeCategoryOptions(items, nullText) {
 
 export function makeArticleOptions(items, nullText) {
   const options = items.map(item => ({
-    value: item._id,
+    value: item.id,
     text: item.title_ja,
   }))
 

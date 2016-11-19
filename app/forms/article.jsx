@@ -13,7 +13,6 @@ function validate(values) {
   return errors
 }
 
-
 class ArticleForm extends Component {
   componentWillMount() {
     const {
@@ -21,27 +20,28 @@ class ArticleForm extends Component {
       title_ja = '',
       title_en = '',
       order = 0,
-      draft = '',
+      draft = false,
       image_url = '',
-      category = '',
+      category_id = '',
       content_ja = '',
       content_en = '',
       comment = '',
     } = this.props.article
-    this.props.initializeForm({ slug, title_ja, title_en, order, draft, image_url, category, content_ja, content_en, comment })
+    this.props.initializeForm({ slug, title_ja, title_en, order, draft, image_url, category_id, content_ja, content_en, comment })
   }
   render() {
-    const { fields: { slug, title_ja, title_en, order, draft, image_url, category, content_ja, content_en, comment }, categories, handleSubmit } = this.props
+    const { fields: { slug, title_ja, title_en, order, draft, image_url, category_id, content_ja, content_en, comment }, categories, handleSubmit } = this.props
+
     return (
       <form onSubmit={handleSubmit}>
         <Text field={ slug } label="URL" required={true} pattern="[a-z0-9_-]{2,}"
-          helpText={ value => value && `http://a2ms.med.hokudai.ac.jp${getArticlePath(slug.value, categories, category.value)} がURLとして使用されます`}/>
+          helpText={ value => value && `http://a2ms.med.hokudai.ac.jp${getArticlePath(slug.value, categories, category_id.value)} がURLとして使用されます`}/>
         <Text field={ title_ja } label="日本語のタイトル" required={true} />
         <Text field={ title_en } label="英語のタイトル" required={true} />
         <Text field={ order }  type="number" label="表示順序（大きいほど上に表示されます）" required={true} />
         <Checkbox field={ draft } label="下書き（チェックを入れると非公開になります）" required={true} />
         <Text field={ image_url } label="アイキャッチに使われる画像のURL" placeholder="画像のURL" />
-        <Select field={ category } options={makeCategoryOptions(categories, '未分類')} />
+        <Select field={ category_id } options={makeCategoryOptions(categories, '未分類')} />
         <Tabs>
           <TabList>
             <Tab>日本語</Tab>
@@ -72,6 +72,6 @@ class ArticleForm extends Component {
 
 export default reduxForm({
   form: 'article',
-  fields: ['slug', 'title_ja', 'title_en', 'order', 'draft', 'image_url', 'category', 'content_ja', 'content_en', 'comment'],
+  fields: ['slug', 'title_ja', 'title_en', 'order', 'draft', 'image_url', 'category_id', 'content_ja', 'content_en', 'comment'],
   validate
 })(ArticleForm)

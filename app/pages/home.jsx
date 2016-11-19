@@ -29,13 +29,13 @@ class CategoryPanels extends Component {
       <ul className={styles.categoryPanels}>
         {
           categories.map(c => {
-            const indexArticle = articles.find(a => a.category === c._id && !a.draft)
+            const indexArticle = articles.find(a => a.category_id === c.id && !a.draft)
             if (!indexArticle) {
               return null
             }
             const href = qq(`/${c.slug}/${indexArticle.slug}`)
             return (
-              <li key={c._id} className={styles.categoryPanel}>
+              <li key={c.id} className={styles.categoryPanel}>
                 <Link to={href}>
                   <h3>{ff(c, 'name')}</h3>
                   {
@@ -65,7 +65,7 @@ class NewsList extends Component {
             newss.map(n =>{
               const message = (ja ? n.message_ja : n.message_en) || ''
               return (
-                <li key={n._id}>
+                <li key={n.id}>
                   <div className={styles.newsDate}>{dateFormat(n.date, (ja ? 'yyyy m/d' : 'mmmm d, yyyy'))}</div>
                   <div className={styles.newsMessage}>
                     {

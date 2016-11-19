@@ -1,23 +1,22 @@
-var ansi2html = require('ansi2html')
-var express = require('express')
-var cookieParser = require('cookie-parser')
-var webpack = require('webpack')
-var webpackDevServer = require('webpack-dev-server')
-var WebpackIsomorphicTools = require('webpack-isomorphic-tools')
-var u = require('./util')
+const ansi2html = require('ansi2html')
+const express = require('express')
+const cookieParser = require('cookie-parser')
+const webpack = require('webpack')
+const webpackDevServer = require('webpack-dev-server')
+const WebpackIsomorphicTools = require('webpack-isomorphic-tools')
+const u = require('./util')
 
-var port = 8080
-var webpackConfig = require('../webpack/config')
+const port = 8080
+const webpackConfig = require('../webpack/config')
 webpackConfig.entry.app.unshift(`webpack-dev-server/client?http://localhost:8080`)
 
-var compiler = webpack(webpackConfig)
-var server = new webpackDevServer(compiler, webpackConfig.devServer)
+const compiler = webpack(webpackConfig)
+const server = new webpackDevServer(compiler, webpackConfig.devServer)
 
-var project_base_path = require('path').resolve(__dirname, '..')
+const project_base_path = require('path').resolve(__dirname, '..')
 
 
 global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../webpack/isomorphic-tools'))
-.development(true)
 .server(project_base_path, function(){
   server.use(cookieParser())
 

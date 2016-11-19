@@ -32,5 +32,4 @@ export function requireAuth(Target, Replacer, level = 'user') {
     user: state.session.user,
     token: state.token,
   }))(AuthComponent);
-
 }
