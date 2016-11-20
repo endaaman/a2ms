@@ -8,8 +8,8 @@ import {
 } from '../actions/category'
 
 
-function sort(files) {
-  files.sort((a, b)=> {
+function sort(cats) {
+  cats.sort((a, b)=> {
     if (a.order < b.order) {
       return 1
     }
@@ -24,7 +24,7 @@ function sort(files) {
     }
     return 0
   })
-  return files
+  return cats
 }
 
 
@@ -40,7 +40,7 @@ export default (state = {
       }}
     case RECIEVE_CATEGORYLIST:
       return {...state, ...{
-        items: action.items,
+        items: sort(action.items),
         promise: null,
       }}
     case DROP_CATEGORYLIST:

@@ -11,8 +11,8 @@ import {
   DELETE_CATEGORY
 } from '../actions/category'
 
-function sort(files) {
-  files.sort((a, b)=> {
+function sort(articles) {
+  articles.sort((a, b)=> {
     if (a.order < b.order) {
       return 1
     }
@@ -27,7 +27,7 @@ function sort(files) {
     }
     return 0
   })
-  return files
+  return articles
 }
 
 
@@ -55,7 +55,7 @@ export default (state = {
       }}
     case RECIEVE_ARTICLELIST:
       return {...state, ...{
-        items: action.items,
+        items: sort(action.items),
         promise: null
       }}
     case DROP_ARTICLELIST:
